@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kaukajarvisoft.tas.answers.MultiChoiceAnswer;
-import com.kaukajarvisoft.tas.answers.SingleChoiceAnswer;
 import com.kaukajarvisoft.tas.services.MultiChoiceAnswerService;
-import com.kaukajarvisoft.tas.services.SingleChoiceAnswerService;
 
 @RestController
 public class MultiChoiceAnswerController {

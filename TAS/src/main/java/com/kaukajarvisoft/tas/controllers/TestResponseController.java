@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kaukajarvisoft.tas.answers.AnswerList;
 import com.kaukajarvisoft.tas.services.TestResponseService;
 import com.kaukajarvisoft.tas.tests.TestResponse;
+import com.kaukajarvisoft.tas.tests.TestResponses;
 
 @RestController
 public class TestResponseController {
@@ -36,11 +37,11 @@ public class TestResponseController {
 	
 	
 	@GetMapping("/testresponses")
-	public ResponseEntity<List<TestResponse>> getTestResponses(){
-		List<TestResponse> testResponses = testResponseService.getTestResponses(); 
+	public ResponseEntity<TestResponses> getTestResponses(){
+		TestResponses testResponses = testResponseService.getTestResponses(); 
 		if(testResponses == null)
-			return new ResponseEntity<List<TestResponse>>(testResponses, HttpStatus.NOT_FOUND);
-		return new ResponseEntity<List<TestResponse>>(testResponses, HttpStatus.OK);
+			return new ResponseEntity<TestResponses>(testResponses, HttpStatus.NOT_FOUND);
+		return new ResponseEntity<TestResponses>(testResponses, HttpStatus.OK);
 	}
 	
 	

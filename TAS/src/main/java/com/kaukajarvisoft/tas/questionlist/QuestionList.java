@@ -1,4 +1,4 @@
-package com.kaukajarvisoft.tas.questions;
+package com.kaukajarvisoft.tas.questionlist;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+
+import com.kaukajarvisoft.tas.questions.Question;
 
 import lombok.Data;
 

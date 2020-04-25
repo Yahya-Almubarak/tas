@@ -11,10 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kaukajarvisoft.tas.questionlist.QuestionList;
 import com.kaukajarvisoft.tas.questions.Question;
-import com.kaukajarvisoft.tas.questions.QuestionList;
 import com.kaukajarvisoft.tas.services.TestService;
 import com.kaukajarvisoft.tas.tests.Test;
+import com.kaukajarvisoft.tas.tests.Tests;
 
 @RestController
 public class TestController {
@@ -37,11 +38,11 @@ public class TestController {
 	
 	
 	@GetMapping("/tests")
-	public ResponseEntity<List<Test>> getTests(){
-		List<Test> tests = testService.getTests(); 
+	public ResponseEntity<Tests> getTests(){
+		Tests tests = testService.getTests(); 
 		if(tests == null)
-			return new ResponseEntity<List<Test>>(tests, HttpStatus.NOT_FOUND);
-		return new ResponseEntity<List<Test>>(tests, HttpStatus.OK);
+			return new ResponseEntity<Tests>(tests, HttpStatus.NOT_FOUND);
+		return new ResponseEntity<Tests>(tests, HttpStatus.OK);
 	}
 	
 	

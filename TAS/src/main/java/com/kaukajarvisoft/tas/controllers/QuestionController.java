@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kaukajarvisoft.tas.questions.Question;
 import com.kaukajarvisoft.tas.services.MultiChoiceQuestionService;
 import com.kaukajarvisoft.tas.services.QuestionService;
-import com.kaukajarvisoft.tas.services.SingleChoiceQuestionService;
 
 
 @RestController
@@ -22,10 +21,6 @@ public class QuestionController {
 	
 	@Autowired
 	QuestionService QuestionService;
-	@Autowired
-	SingleChoiceQuestionService singleChoiceQuestionService;
-	@Autowired
-	MultiChoiceQuestionService multiChoiceQuestionService;
 	
 	@GetMapping("/question/{id}")
 	public ResponseEntity<Question> getQuestion(@PathVariable Long id){

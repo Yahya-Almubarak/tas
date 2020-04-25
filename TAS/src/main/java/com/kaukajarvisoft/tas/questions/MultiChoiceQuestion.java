@@ -1,6 +1,7 @@
 package com.kaukajarvisoft.tas.questions;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -20,7 +21,7 @@ import com.kaukajarvisoft.tas.users.TasUser;
 import lombok.Data;
 @Data
 @Entity
-public class MultiChoiceQuestion implements IQuestion {
+public class MultiChoiceQuestion {
 	@Id 
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	Long  id;
@@ -41,9 +42,8 @@ public class MultiChoiceQuestion implements IQuestion {
 	String body;
 	
 	@ElementCollection(targetClass=String.class, fetch=FetchType.EAGER)
-	Map<Long, String> choices;
+	List<String> choices;
 	
-	Long numberOfCorrectChoices;
 	
 	@OneToOne
 	Question question;
@@ -51,10 +51,6 @@ public class MultiChoiceQuestion implements IQuestion {
 	@OneToOne
 	TasUser author;
 	
-	public MultiChoiceQuestion() {
-		super();
-		type = QuestionTypes.MULTI_CHOICE;
-	}
 	
 
 }

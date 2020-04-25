@@ -29,7 +29,6 @@ public class CorrectMultiChoiceAnswer{
 	Locale local;
 	String description;
 	QuestionTypes type;
-	Long numberOfCorrectChoices;
 	
 	@ElementCollection(targetClass=Long.class, fetch=FetchType.EAGER)
 	List<Long> choices;
@@ -37,17 +36,13 @@ public class CorrectMultiChoiceAnswer{
 
 	String commentOnAnswer;
 	@ElementCollection(targetClass=String.class)
-	Map<Long, String> commentOnChoices;
+	List<String> commentOnChoices;
 	
 	
 	
 	@OneToOne
 	CorrectAnswer correctAnswer;
 	
-	public CorrectMultiChoiceAnswer() {
-		super();
-		type = QuestionTypes.MULTI_CHOICE;
-	}
 	
 	
 

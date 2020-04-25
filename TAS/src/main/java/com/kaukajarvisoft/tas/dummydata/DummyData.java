@@ -3,66 +3,51 @@ package com.kaukajarvisoft.tas.dummydata;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.kaukajarvisoft.tas.answers.Answer;
 import com.kaukajarvisoft.tas.answers.AnswerList;
 import com.kaukajarvisoft.tas.answers.CorrectAnswer;
 import com.kaukajarvisoft.tas.answers.CorrectMultiChoiceAnswer;
-import com.kaukajarvisoft.tas.answers.CorrectSingleChoiceAnswer;
 import com.kaukajarvisoft.tas.answers.MultiChoiceAnswer;
-import com.kaukajarvisoft.tas.answers.SingleChoiceAnswer;
 import com.kaukajarvisoft.tas.assesment.AssessmentHandler;
-import com.kaukajarvisoft.tas.controllers.AssessmentController;
+import com.kaukajarvisoft.tas.questionlist.QuestionList;
 import com.kaukajarvisoft.tas.questions.MultiChoiceQuestion;
 import com.kaukajarvisoft.tas.questions.Question;
-import com.kaukajarvisoft.tas.questions.QuestionList;
-import com.kaukajarvisoft.tas.questions.SingleChoiceQuestion;
+import com.kaukajarvisoft.tas.questions.QuestionTypes;
 import com.kaukajarvisoft.tas.repositories.CorrectMultiChoiceAnswerRepository;
-import com.kaukajarvisoft.tas.repositories.CorrectSingleChoiceAnswerRepository;
 import com.kaukajarvisoft.tas.repositories.MultiChoiceQuestionRepository;
 import com.kaukajarvisoft.tas.repositories.QuestionListRepository;
 import com.kaukajarvisoft.tas.repositories.QuestionRepository;
-import com.kaukajarvisoft.tas.repositories.SingleChoiceQuestionRepository;
 import com.kaukajarvisoft.tas.services.AnswerListService;
 import com.kaukajarvisoft.tas.services.AnswerService;
 import com.kaukajarvisoft.tas.services.CorrectAnswerService;
 import com.kaukajarvisoft.tas.services.CorrectMultiChoiceAnswerService;
-import com.kaukajarvisoft.tas.services.CorrectSingleChoiceAnswerService;
 import com.kaukajarvisoft.tas.services.GradeService;
 import com.kaukajarvisoft.tas.services.MultiChoiceQuestionService;
 import com.kaukajarvisoft.tas.services.QuestionListService;
 import com.kaukajarvisoft.tas.services.QuestionService;
-import com.kaukajarvisoft.tas.services.SingleChoiceAnswerService;
-import com.kaukajarvisoft.tas.services.SingleChoiceQuestionService;
 import com.kaukajarvisoft.tas.services.TestResponseService;
 import com.kaukajarvisoft.tas.services.TestService;
 import com.kaukajarvisoft.tas.tests.Grade;
 import com.kaukajarvisoft.tas.tests.GradeCriteria;
 import com.kaukajarvisoft.tas.tests.Test;
 import com.kaukajarvisoft.tas.tests.TestResponse;
+import com.kaukajarvisoft.tas.tests.Tests;
 
 public class DummyData {
 
 	
-	static public void populateData(SingleChoiceQuestionRepository singleChoiceQuestionRepository, 
-			MultiChoiceQuestionRepository multiChoiceQuestionRepository,
-			CorrectSingleChoiceAnswerRepository correctSingleChoiceAnswerRepository, 
+	static public void populateData(MultiChoiceQuestionRepository multiChoiceQuestionRepository,
 			CorrectMultiChoiceAnswerRepository correctMultiChoiceAnswerRepository,
 			QuestionListRepository questionListRepository, 
 			QuestionRepository questionRepository,
 			QuestionListService questionListService,
 			QuestionService questionService,
-			SingleChoiceQuestionService singleChoiceQuestionService,
 			MultiChoiceQuestionService multiChoiceQuestionService,
-			CorrectSingleChoiceAnswerService correctSingleChoiceAnswerService,
 			CorrectMultiChoiceAnswerService correctMultiChoiceAnswerService,
-			SingleChoiceAnswerService singleChoiceAnswerService,
 			CorrectAnswerService correctAnswerService,
 			TestService testService,
 			AnswerService answerService,
@@ -75,35 +60,26 @@ public class DummyData {
 	//	obtainDummyMultiChoiceQuestions(multiChoiceQuestionRepository, correctMultiChoiceAnswerRepository, questionListRepository,questionRepository);
 	//	obtainDummySingleChoiceQuestionsToSecondList(singleChoiceQuestionRepository, correctSingleChoiceAnswerRepository, questionListRepository, questionRepository);
 		obtainDummyQuestionandAddItToListFromServices_I(
-				singleChoiceQuestionService,
 				multiChoiceQuestionService,
-				correctSingleChoiceAnswerService, 
 				correctMultiChoiceAnswerService,
 				questionListService, 
 				questionService,
-				singleChoiceAnswerService,
 				correctAnswerService,
 				testService); 
 	
 	
 	obtainDummyQuestionandAddItToListFromServices_II(
-			singleChoiceQuestionService,
 			multiChoiceQuestionService,
-			correctSingleChoiceAnswerService, 
 			correctMultiChoiceAnswerService,
 			questionListService, 
 			questionService,
-			singleChoiceAnswerService,
 			correctAnswerService,
 			testService); 
 	
-	answerTest(singleChoiceQuestionService,
-			multiChoiceQuestionService,
-			correctSingleChoiceAnswerService, 
+	answerTest(multiChoiceQuestionService,
 			correctMultiChoiceAnswerService, 
 			questionListService, 
 			questionService,
-			singleChoiceAnswerService,
 			correctAnswerService,
 			testService,
 			answerService,
@@ -452,13 +428,10 @@ public class DummyData {
 	} */
 
 	
-	static public void obtainDummyQuestionandAddItToListFromServices_I(SingleChoiceQuestionService singleChoiceQuestionService,
-			MultiChoiceQuestionService multiChoiceQuestionService,
-			CorrectSingleChoiceAnswerService correctSingleChoiceAnswerService, 
+	static public void obtainDummyQuestionandAddItToListFromServices_I(MultiChoiceQuestionService multiChoiceQuestionService,
 			CorrectMultiChoiceAnswerService correctMultiChoiceAnswerService, 
 			QuestionListService questionListService, 
 			QuestionService questionService,
-			SingleChoiceAnswerService singleChoiceAnswerService,
 			CorrectAnswerService correctAnswerService,
 			TestService testService) {
 		
@@ -467,14 +440,10 @@ public class DummyData {
 		questionList.setQuestions(new ArrayList<>());
 		questionList = questionListService.createList(questionList);
 		
-		SingleChoiceQuestion singleChoiceQuestion;
 		Question question;
-		Question tempQuestion;
-		Map<Long, String> choices;
+		List<String> choices;
 		CorrectAnswer correctAnswer; 
-		CorrectSingleChoiceAnswer  correctSingleChoiceAnswer;
-		SingleChoiceAnswer singleChoiceAnswer;
-		MultiChoiceQuestion multiChoiceQuestion;
+		MultiChoiceQuestion multiChoiceQuestion = new MultiChoiceQuestion() ;
 		CorrectMultiChoiceAnswer correctMultiChoiceAnswer;
 		String body;
 		
@@ -485,25 +454,25 @@ public class DummyData {
 		
 		// -----------------------------------
 	
-		singleChoiceQuestion = new SingleChoiceQuestion();
-		choices = new HashMap<>();
+		choices = new ArrayList<>();
 		
-		singleChoiceQuestion.setLocal(new Locale("en"));
-		singleChoiceQuestion.setName("Question one");
-		singleChoiceQuestion.setDescription("Dummy question");
+		multiChoiceQuestion.setLocal(new Locale("en"));
+		multiChoiceQuestion.setName("Question one");
+		multiChoiceQuestion.setDescription("Dummy question");
+		multiChoiceQuestion.setType(QuestionTypes.SINGLE_SELECT_MULTI_CHOICE);
 		
 		body = "What is the capital of Finland?";
-		singleChoiceQuestion.setBody(body);
+		multiChoiceQuestion.setBody(body);
 	
-		choices.put(1L, "Helsinki");
-		choices.put(2L, "Stockholm");
-		choices.put(3L, "Turku");
-		singleChoiceQuestion.setChoices(choices);
+		choices.add("Helsinki");
+		choices.add("Stockholm");
+		choices.add("Turku");
+		multiChoiceQuestion.setChoices(choices);
 		
 		
 		// ----- 
-		singleChoiceQuestion = singleChoiceQuestionService.saveSingleChoiceQuestion(singleChoiceQuestion);
-		question = questionService.createQuestion(singleChoiceQuestion);
+		multiChoiceQuestion = multiChoiceQuestionService.saveMultiChoiceQuestion(multiChoiceQuestion);
+		question = questionService.createQuestion(multiChoiceQuestion);
 		questionListService.addQuestionToQuestionList(questionList, question);
 		
 		
@@ -513,12 +482,12 @@ public class DummyData {
 		//___________________________________
 		//___________________________________ Correct Answer 1
 		
-		correctSingleChoiceAnswer = new CorrectSingleChoiceAnswer();
-		correctSingleChoiceAnswer.setLocal(new Locale("en"));
-		correctSingleChoiceAnswer.setName("Answer 1");
-		correctSingleChoiceAnswer.setDescription("Answer for dummy question 1");
-		correctSingleChoiceAnswer.setChoice(1L);
-		correctAnswer = correctAnswerService.createCorrectAnswer(correctSingleChoiceAnswer);
+		correctMultiChoiceAnswer = new CorrectMultiChoiceAnswer();
+		correctMultiChoiceAnswer.setLocal(new Locale("en"));
+		correctMultiChoiceAnswer.setName("Answer 1");
+		correctMultiChoiceAnswer.setDescription("Answer for dummy question 1");
+		correctMultiChoiceAnswer.setChoices(Arrays.asList(new Long[] {1L, 0L, 0L}));
+		correctAnswer = correctAnswerService.createCorrectAnswer(correctMultiChoiceAnswer);
 		correctAnswer.setQuestion(question);
 		correctAnswerService.saveCorrectAnswer(correctAnswer);
 		
@@ -529,23 +498,24 @@ public class DummyData {
 		//________________________________ Question 2
 		
 		
-		singleChoiceQuestion = new SingleChoiceQuestion();
-		singleChoiceQuestion.setLocal(new Locale("fi"));
-		singleChoiceQuestion.setName("Kysymys Yksi");
-		singleChoiceQuestion.setDescription("Teko Kysymys");
+		multiChoiceQuestion = new MultiChoiceQuestion();
+		multiChoiceQuestion.setLocal(new Locale("fi"));
+		multiChoiceQuestion.setName("Kysymys Yksi");
+		multiChoiceQuestion.setDescription("Teko Kysymys");
+		multiChoiceQuestion.setType(QuestionTypes.SINGLE_SELECT_MULTI_CHOICE);
 		
 		body = "Mitä on Suomen pääkaupunki?";
-		singleChoiceQuestion.setBody(body);
+		multiChoiceQuestion.setBody(body);
 		
-		choices = new HashMap<>();
-		choices.put(1L, "Helsinki");
-		choices.put(2L, "Tokholma");
-		choices.put(3L, "Turku");
-		singleChoiceQuestion.setChoices(choices);
+		choices = new ArrayList<>();
+		choices.add("Helsinki");
+		choices.add("Tokholma");
+		choices.add("Turku");
+		multiChoiceQuestion.setChoices(choices);
 		
 		
-		singleChoiceQuestion = singleChoiceQuestionService.saveSingleChoiceQuestion(singleChoiceQuestion);
-		question = questionService.createQuestion(singleChoiceQuestion);
+		multiChoiceQuestion = multiChoiceQuestionService.saveMultiChoiceQuestion(multiChoiceQuestion);
+		question = questionService.createQuestion(multiChoiceQuestion);
 		questionListService.addQuestionToQuestionList(questionList, question);
 		
 	
@@ -555,13 +525,13 @@ public class DummyData {
 		
 		//-------------------------
 		//__________________________ Correct Answer 2
-		 correctSingleChoiceAnswer = new CorrectSingleChoiceAnswer();
-		correctSingleChoiceAnswer.setLocal(new Locale("fi"));
-		correctSingleChoiceAnswer.setName("Vastaus 2");
-		correctSingleChoiceAnswer.setDescription("Vastaus 1");
-		correctSingleChoiceAnswer.setChoice(1L);
+		 correctMultiChoiceAnswer = new CorrectMultiChoiceAnswer();
+		correctMultiChoiceAnswer.setLocal(new Locale("fi"));
+		correctMultiChoiceAnswer.setName("Vastaus 2");
+		correctMultiChoiceAnswer.setDescription("Vastaus 1");
+		correctMultiChoiceAnswer.setChoices(Arrays.asList(new Long[] {1L, 0L, 0L}));
 		
-		correctAnswer = correctAnswerService.createCorrectAnswer(correctSingleChoiceAnswer);
+		correctAnswer = correctAnswerService.createCorrectAnswer(correctMultiChoiceAnswer);
 		correctAnswer.setQuestion(question);
 		correctAnswerService.saveCorrectAnswer(correctAnswer);
 		
@@ -573,19 +543,20 @@ public class DummyData {
 			multiChoiceQuestion = new MultiChoiceQuestion();
 			
 			// -----------------------------------
-			choices = new HashMap<>();
+			choices = new ArrayList<>();
 			
 			multiChoiceQuestion.setLocal(new Locale("en"));
 			multiChoiceQuestion.setName("Multi Question");
 			multiChoiceQuestion.setDescription("About continent question");
+			multiChoiceQuestion.setType(QuestionTypes.MULTI_SELECT_MULTI_CHOICE);
 			
 			body = "Some of these are continents?";
 			multiChoiceQuestion.setBody(body);
 			
 			
-			choices.put(1L, "Africa");
-			choices.put(2L, "Amerika");
-			choices.put(3L, "Russia");
+			choices.add("Africa");
+			choices.add("Amerika");
+			choices.add("Russia");
 			multiChoiceQuestion.setChoices(choices);
 
 			multiChoiceQuestion = multiChoiceQuestionService.saveMultiChoiceQuestion(multiChoiceQuestion);
@@ -615,14 +586,15 @@ public class DummyData {
 			multiChoiceQuestion.setLocal(new Locale("fi"));
 			multiChoiceQuestion.setName("vaihtoehto Kysymys");
 			multiChoiceQuestion.setDescription("Teko Kysymys maanosista");
+			multiChoiceQuestion.setType(QuestionTypes.MULTI_SELECT_MULTI_CHOICE);
 			
 			body = "Mitä niitä on maanosaia?";
 			multiChoiceQuestion.setBody(body);
 			
-			choices = new HashMap<>();
-			choices.put(1L, "Afrikka");
-			choices.put(2L, "Amerikka");
-			choices.put(3L, "Venäjä");
+			choices = new ArrayList<>();
+			choices.add("Afrikka");
+			choices.add("Amerikka");
+			choices.add("Venäjä");
 			multiChoiceQuestion.setChoices(choices);
 			
 			multiChoiceQuestion = multiChoiceQuestionService.saveMultiChoiceQuestion(multiChoiceQuestion);
@@ -653,14 +625,15 @@ public class DummyData {
 			multiChoiceQuestion.setLocal(new Locale("ar"));
 			multiChoiceQuestion.setName("سؤال متعدد");
 			multiChoiceQuestion.setDescription("سؤال عن القارات");
+			multiChoiceQuestion.setType(QuestionTypes.MULTI_SELECT_MULTI_CHOICE);
 			
 			body = "ما هي القارات من الاختيارات";
 			multiChoiceQuestion.setBody(body);
 			
-			choices = new HashMap<>();
-			choices.put(1L, "افريقيا");
-			choices.put(2L, "امريكا");
-			choices.put(3L, "روسيا");
+			choices = new ArrayList<>();
+			choices.add("افريقيا");
+			choices.add("امريكا");
+			choices.add("روسيا");
 			
 			multiChoiceQuestion.setChoices(choices);
 			
@@ -695,13 +668,10 @@ public class DummyData {
 	}
 	
 	
-	static public void obtainDummyQuestionandAddItToListFromServices_II(SingleChoiceQuestionService singleChoiceQuestionService,
-			MultiChoiceQuestionService multiChoiceQuestionService,
-			CorrectSingleChoiceAnswerService correctSingleChoiceAnswerService, 
+	static public void obtainDummyQuestionandAddItToListFromServices_II(MultiChoiceQuestionService multiChoiceQuestionService,
 			CorrectMultiChoiceAnswerService correctMultiChoiceAnswerService, 
 			QuestionListService questionListService, 
 			QuestionService questionService,
-			SingleChoiceAnswerService singleChoiceAnswerService,
 			CorrectAnswerService correctAnswerService,
 			TestService testService) {
 		
@@ -710,13 +680,10 @@ public class DummyData {
 		questionList.setQuestions(new ArrayList<>());
 		questionList = questionListService.createList(questionList);
 		
-		SingleChoiceQuestion singleChoiceQuestion;
 		Question question;
 		Question tempQuestion;
-		Map<Long, String> choices;
+		List<String> choices;
 		CorrectAnswer correctAnswer; 
-		CorrectSingleChoiceAnswer  correctSingleChoiceAnswer;
-		SingleChoiceAnswer singleChoiceAnswer;
 		MultiChoiceQuestion multiChoiceQuestion;
 		CorrectMultiChoiceAnswer correctMultiChoiceAnswer;
 		String body;
@@ -728,25 +695,26 @@ public class DummyData {
 		
 		// -----------------------------------
 	
-		singleChoiceQuestion = new SingleChoiceQuestion();
-		choices = new HashMap<>();
+		multiChoiceQuestion = new MultiChoiceQuestion();
+		choices = new ArrayList<>();
 		
-		singleChoiceQuestion.setLocal(new Locale("en"));
-		singleChoiceQuestion.setName("Question one");
-		singleChoiceQuestion.setDescription("Dummy question");
+		multiChoiceQuestion.setLocal(new Locale("en"));
+		multiChoiceQuestion.setName("Question one");
+		multiChoiceQuestion.setDescription("Dummy question");
+		multiChoiceQuestion.setType(QuestionTypes.SINGLE_SELECT_MULTI_CHOICE);
 		
 		body = "What is the capital of Italy?";
-		singleChoiceQuestion.setBody(body);
+		multiChoiceQuestion.setBody(body);
 	
-		choices.put(1L, "Helsinki");
-		choices.put(2L, "Paris");
-		choices.put(3L, "Rome");
-		singleChoiceQuestion.setChoices(choices);
+		choices.add("Helsinki");
+		choices.add("Paris");
+		choices.add("Rome");
+		multiChoiceQuestion.setChoices(choices);
 		
 		
 		// ----- 
-		singleChoiceQuestion = singleChoiceQuestionService.saveSingleChoiceQuestion(singleChoiceQuestion);
-		question = questionService.createQuestion(singleChoiceQuestion);
+		multiChoiceQuestion = multiChoiceQuestionService.saveMultiChoiceQuestion(multiChoiceQuestion);
+		question = questionService.createQuestion(multiChoiceQuestion);
 		questionListService.addQuestionToQuestionList(questionList, question);
 		
 		
@@ -756,12 +724,12 @@ public class DummyData {
 		//___________________________________
 		//___________________________________ Correct Answer 6
 		
-		correctSingleChoiceAnswer = new CorrectSingleChoiceAnswer();
-		correctSingleChoiceAnswer.setLocal(new Locale("en"));
-		correctSingleChoiceAnswer.setName("Answer 1");
-		correctSingleChoiceAnswer.setDescription("Answer for dummy question 1");
-		correctSingleChoiceAnswer.setChoice(3L);
-		correctAnswer = correctAnswerService.createCorrectAnswer(correctSingleChoiceAnswer);
+		correctMultiChoiceAnswer = new CorrectMultiChoiceAnswer();
+		correctMultiChoiceAnswer.setLocal(new Locale("en"));
+		correctMultiChoiceAnswer.setName("Answer 1");
+		correctMultiChoiceAnswer.setDescription("Answer for dummy question 1");
+		correctMultiChoiceAnswer.setChoices(Arrays.asList(new Long[] {0L, 0L, 1L}));
+		correctAnswer = correctAnswerService.createCorrectAnswer(correctMultiChoiceAnswer);
 		correctAnswer.setQuestion(question);
 		correctAnswerService.saveCorrectAnswer(correctAnswer);
 		
@@ -772,23 +740,24 @@ public class DummyData {
 		//________________________________ Question 7
 		
 		
-		singleChoiceQuestion = new SingleChoiceQuestion();
-		singleChoiceQuestion.setLocal(new Locale("fi"));
-		singleChoiceQuestion.setName("Kysymys Yksi");
-		singleChoiceQuestion.setDescription("Teko Kysymys");
+		multiChoiceQuestion = new MultiChoiceQuestion();
+		multiChoiceQuestion.setLocal(new Locale("fi"));
+		multiChoiceQuestion.setName("Kysymys Yksi");
+		multiChoiceQuestion.setDescription("Teko Kysymys");
+		multiChoiceQuestion.setType(QuestionTypes.SINGLE_SELECT_MULTI_CHOICE);
 		
 		body = "Mitä on Viron pääkaupunki?";
-		singleChoiceQuestion.setBody(body);
+		multiChoiceQuestion.setBody(body);
 		
-		choices = new HashMap<>();
-		choices.put(1L, "London");
-		choices.put(2L, "Tallin");
-		choices.put(3L, "Oslo");
-		singleChoiceQuestion.setChoices(choices);
+		choices = new ArrayList<>();
+		choices.add("London");
+		choices.add("Tallin");
+		choices.add("Oslo");
+		multiChoiceQuestion.setChoices(choices);
 		
 		
-		singleChoiceQuestion = singleChoiceQuestionService.saveSingleChoiceQuestion(singleChoiceQuestion);
-		question = questionService.createQuestion(singleChoiceQuestion);
+		multiChoiceQuestion = multiChoiceQuestionService.saveMultiChoiceQuestion(multiChoiceQuestion);
+		question = questionService.createQuestion(multiChoiceQuestion);
 		questionListService.addQuestionToQuestionList(questionList, question);
 		
 	
@@ -798,13 +767,13 @@ public class DummyData {
 		
 		//-------------------------
 		//__________________________Correct  Answer 7
-		 correctSingleChoiceAnswer = new CorrectSingleChoiceAnswer();
-		correctSingleChoiceAnswer.setLocal(new Locale("fi"));
-		correctSingleChoiceAnswer.setName("Vastaus 2");
-		correctSingleChoiceAnswer.setDescription("Vastaus 1");
-		correctSingleChoiceAnswer.setChoice(1L);
+		 correctMultiChoiceAnswer = new CorrectMultiChoiceAnswer();
+		correctMultiChoiceAnswer.setLocal(new Locale("fi"));
+		correctMultiChoiceAnswer.setName("Vastaus 2");
+		correctMultiChoiceAnswer.setDescription("Vastaus 1");
+		correctMultiChoiceAnswer.setChoices(Arrays.asList(new Long[] {0L, 1L, 0L}));
 		
-		correctAnswer = correctAnswerService.createCorrectAnswer(correctSingleChoiceAnswer);
+		correctAnswer = correctAnswerService.createCorrectAnswer(correctMultiChoiceAnswer);
 		correctAnswer.setQuestion(question);
 		correctAnswerService.saveCorrectAnswer(correctAnswer);
 		
@@ -816,19 +785,20 @@ public class DummyData {
 			multiChoiceQuestion = new MultiChoiceQuestion();
 			
 			// -----------------------------------
-			choices = new HashMap<>();
+			choices = new ArrayList<>();
 			
 			multiChoiceQuestion.setLocal(new Locale("en"));
 			multiChoiceQuestion.setName("Multi Question");
 			multiChoiceQuestion.setDescription("About continent question");
+			multiChoiceQuestion.setType(QuestionTypes.MULTI_SELECT_MULTI_CHOICE);
 			
 			body = "Some of these are continents?";
 			multiChoiceQuestion.setBody(body);
 			
 			
-			choices.put(1L, "Africa");
-			choices.put(2L, "Amerika");
-			choices.put(3L, "Russia");
+			choices.add("Africa");
+			choices.add("Amerika");
+			choices.add("Russia");
 			multiChoiceQuestion.setChoices(choices);
 
 			multiChoiceQuestion = multiChoiceQuestionService.saveMultiChoiceQuestion(multiChoiceQuestion);
@@ -841,7 +811,7 @@ public class DummyData {
 			correctMultiChoiceAnswer.setLocal(new Locale("en"));
 			correctMultiChoiceAnswer.setName("Answer 1");
 			correctMultiChoiceAnswer.setDescription("Answer for dummy question 1");
-			correctMultiChoiceAnswer.setChoices(Arrays.asList(new Long[]{1L, 2L}));
+			correctMultiChoiceAnswer.setChoices(Arrays.asList(new Long[]{1L, 1L, 0L}));
 			
 
 			correctAnswer = correctAnswerService.createCorrectAnswer(correctMultiChoiceAnswer);
@@ -858,14 +828,15 @@ public class DummyData {
 			multiChoiceQuestion.setLocal(new Locale("fi"));
 			multiChoiceQuestion.setName("vaihtoehto Kysymys");
 			multiChoiceQuestion.setDescription("Teko Kysymys maanosista");
+			multiChoiceQuestion.setType(QuestionTypes.MULTI_SELECT_MULTI_CHOICE);
 			
 			body = "Mitä niitä on maanosaia?";
 			multiChoiceQuestion.setBody(body);
 			
-			choices = new HashMap<>();
-			choices.put(1L, "Afrikka");
-			choices.put(2L, "Amerikka");
-			choices.put(3L, "Venäjä");
+			choices = new ArrayList<>();
+			choices.add("Afrikka");
+			choices.add("Amerikka");
+			choices.add("Venäjä");
 			multiChoiceQuestion.setChoices(choices);
 			
 			multiChoiceQuestion = multiChoiceQuestionService.saveMultiChoiceQuestion(multiChoiceQuestion);
@@ -879,7 +850,7 @@ public class DummyData {
 				correctMultiChoiceAnswer.setLocal(new Locale("fi"));
 				correctMultiChoiceAnswer.setName("Vastaus 2");
 				correctMultiChoiceAnswer.setDescription("Vastaus 2");
-				correctMultiChoiceAnswer .setChoices(Arrays.asList(new Long[]{1L, 2L}));
+				correctMultiChoiceAnswer .setChoices(Arrays.asList(new Long[]{1L, 1L, 0L}));
 				
 
 				correctAnswer = correctAnswerService.createCorrectAnswer(correctMultiChoiceAnswer);
@@ -896,14 +867,15 @@ public class DummyData {
 			multiChoiceQuestion.setLocal(new Locale("ar"));
 			multiChoiceQuestion.setName("سؤال متعدد");
 			multiChoiceQuestion.setDescription("سؤال عن القارات");
+			multiChoiceQuestion.setType(QuestionTypes.MULTI_SELECT_MULTI_CHOICE);
 			
 			body = "ما هي القارات من الاختيارات";
 			multiChoiceQuestion.setBody(body);
 			
-			choices = new HashMap<>();
-			choices.put(1L, "افريقيا");
-			choices.put(2L, "امريكا");
-			choices.put(3L, "روسيا");
+			choices = new ArrayList<>();
+			choices.add("افريقيا");
+			choices.add("امريكا");
+			choices.add("روسيا");
 			multiChoiceQuestion.setChoices(choices);
 			
 			multiChoiceQuestion = multiChoiceQuestionService.saveMultiChoiceQuestion(multiChoiceQuestion);
@@ -916,7 +888,7 @@ public class DummyData {
 			correctMultiChoiceAnswer.setLocal(new Locale("ar"));
 			correctMultiChoiceAnswer.setName("Vastaus 3");
 			correctMultiChoiceAnswer.setDescription("Vastaus 3");
-			correctMultiChoiceAnswer.setChoices(Arrays.asList(new Long[]{1L, 2L}));
+			correctMultiChoiceAnswer.setChoices(Arrays.asList(new Long[]{1L, 1L, 0L}));
 
 			correctAnswer = correctAnswerService.createCorrectAnswer(correctMultiChoiceAnswer);
 			correctAnswer.setQuestion(question);
@@ -931,13 +903,10 @@ public class DummyData {
 			testService.addGradeCriteria(test, gradeCriteria);		
 	}
 	
-	public static void answerTest(SingleChoiceQuestionService singleChoiceQuestionService,
-			MultiChoiceQuestionService multiChoiceQuestionService,
-			CorrectSingleChoiceAnswerService correctSingleChoiceAnswerService, 
+	public static void answerTest(MultiChoiceQuestionService multiChoiceQuestionService,
 			CorrectMultiChoiceAnswerService correctMultiChoiceAnswerService, 
 			QuestionListService questionListService, 
 			QuestionService questionService,
-			SingleChoiceAnswerService singleChoiceAnswerService,
 			CorrectAnswerService correctAnswerService,
 			TestService testService,
 			AnswerService answerService,
@@ -946,36 +915,31 @@ public class DummyData {
 			AssessmentHandler assessmentService,
 			GradeService gradeService) {
 		
-		List<Test> tests; 
+		Tests tests; 
 		AnswerList answerList = new AnswerList();
 		List<Answer> answers = new ArrayList<>();
 		Answer answer;
 		QuestionList questionList = new QuestionList();	
 		
-		SingleChoiceQuestion singleChoiceQuestion;
-		Question question;
-		Question tempQuestion;
-		Map<Long, String> choices;
-		CorrectSingleChoiceAnswer  correctSingleChoiceAnswer;
-		SingleChoiceAnswer singleChoiceAnswer;
+	
 		MultiChoiceAnswer multiChoiceAnswer;
 		
 		
 			tests = testService.getTests();
-			questionList = tests.get(0).getQuestionList();
+			questionList = tests.getTests().get(0).getQuestionList();
 			
-			singleChoiceAnswer = new SingleChoiceAnswer();
-			singleChoiceAnswer.setChoice(2L);
+			multiChoiceAnswer = new MultiChoiceAnswer();
+			multiChoiceAnswer.setChoices(Arrays.asList(new Long[] {1L, 0L, 1L}));
 			
 			
-			answer = answerService.createAnswer(singleChoiceAnswer);
+			answer = answerService.createAnswer(multiChoiceAnswer);
 			answer.setQuestion(questionList.getQuestions().get(0));
 			answer = answerService.saveAnswer(answer);
 			answers.add(answer);
 			
-			singleChoiceAnswer = new SingleChoiceAnswer();
-			singleChoiceAnswer.setChoice(1L);
-			answer = answerService.createAnswer(singleChoiceAnswer);
+			multiChoiceAnswer = new MultiChoiceAnswer();
+			multiChoiceAnswer.setChoices(Arrays.asList(new Long[] {1L, 0L, 1L}));
+			answer = answerService.createAnswer(multiChoiceAnswer);
 			answer.setQuestion(questionList.getQuestions().get(1));
 			answer = answerService.saveAnswer(answer);
 			answers.add(answer);
@@ -1008,7 +972,7 @@ public class DummyData {
 			TestResponse testResponse = new TestResponse();
 			testResponse = testResponseService.saveTestResponse(testResponse);
 			testResponseService.addAnswerList(testResponse, answerList);
-			testResponse.setTestId(tests.get(0).getId());
+			testResponse.setTestId(tests.getTests().get(0).getId());
 			testResponse = testResponseService.saveTestResponse(testResponse);
 			
 			Grade grade = assessmentService.grade(testResponse);

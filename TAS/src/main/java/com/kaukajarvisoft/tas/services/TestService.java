@@ -5,10 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kaukajarvisoft.tas.questions.QuestionList;
+import com.kaukajarvisoft.tas.questionlist.QuestionList;
 import com.kaukajarvisoft.tas.repositories.TestRepository;
 import com.kaukajarvisoft.tas.tests.GradeCriteria;
 import com.kaukajarvisoft.tas.tests.Test;
+import com.kaukajarvisoft.tas.tests.Tests;
 
 @Service
 public class TestService {
@@ -25,8 +26,11 @@ public class TestService {
 		return testRepository.findById(id).get();
 	}
 	
-	public List<Test> getTests() {
-		return testRepository.findAll();
+	public Tests   getTests() {
+		Tests tests = new Tests();
+		List<Test> listOfTests =  testRepository.findAll();
+		tests.setTests(listOfTests);
+		return tests;
 	}
 	
 	public void removeTest(Test test) {

@@ -5,8 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kaukajarvisoft.tas.questionlist.QuestionList;
+import com.kaukajarvisoft.tas.questionlist.QuestionLists;
 import com.kaukajarvisoft.tas.questions.Question;
-import com.kaukajarvisoft.tas.questions.QuestionList;
 import com.kaukajarvisoft.tas.repositories.QuestionListRepository;
 
 @Service
@@ -25,8 +26,11 @@ public class QuestionListService {
 		return questionListRepository.findById(id).orElse(null);
 	}
 	
-	public List<QuestionList> getQuestionLists() {
-		return questionListRepository.findAll();
+	public QuestionLists getQuestionLists() {
+		QuestionLists questionLists = new QuestionLists();
+		List<QuestionList> listOfQuestionLists = questionListRepository.findAll();
+		questionLists.setQuestionLists(listOfQuestionLists);
+		return questionLists;
 	}
 	
 	public void addQuestionToQuestionList(QuestionList questionList, Question question) {

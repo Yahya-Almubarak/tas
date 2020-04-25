@@ -9,24 +9,18 @@ import org.springframework.context.annotation.ComponentScan;
 
 import com.kaukajarvisoft.tas.assesment.AssessmentHandler;
 import com.kaukajarvisoft.tas.dummydata.DummyData;
-import com.kaukajarvisoft.tas.questions.QuestionList;
 import com.kaukajarvisoft.tas.repositories.CorrectMultiChoiceAnswerRepository;
-import com.kaukajarvisoft.tas.repositories.CorrectSingleChoiceAnswerRepository;
 import com.kaukajarvisoft.tas.repositories.MultiChoiceQuestionRepository;
 import com.kaukajarvisoft.tas.repositories.QuestionListRepository;
 import com.kaukajarvisoft.tas.repositories.QuestionRepository;
-import com.kaukajarvisoft.tas.repositories.SingleChoiceQuestionRepository;
 import com.kaukajarvisoft.tas.services.AnswerListService;
 import com.kaukajarvisoft.tas.services.AnswerService;
 import com.kaukajarvisoft.tas.services.CorrectAnswerService;
 import com.kaukajarvisoft.tas.services.CorrectMultiChoiceAnswerService;
-import com.kaukajarvisoft.tas.services.CorrectSingleChoiceAnswerService;
 import com.kaukajarvisoft.tas.services.GradeService;
 import com.kaukajarvisoft.tas.services.MultiChoiceQuestionService;
 import com.kaukajarvisoft.tas.services.QuestionListService;
 import com.kaukajarvisoft.tas.services.QuestionService;
-import com.kaukajarvisoft.tas.services.SingleChoiceAnswerService;
-import com.kaukajarvisoft.tas.services.SingleChoiceQuestionService;
 import com.kaukajarvisoft.tas.services.TestResponseService;
 import com.kaukajarvisoft.tas.services.TestService;
 
@@ -41,19 +35,14 @@ public class TasApplication {
 	}
 		@Bean
 		public CommandLineRunner demo(
-				SingleChoiceQuestionRepository singleChoiceQuestionRepository, 
 				MultiChoiceQuestionRepository multiChoiceQuestionRepository, 
-				CorrectSingleChoiceAnswerRepository correctSingleChoiceAnswerRepository, 
 				CorrectMultiChoiceAnswerRepository correctMultiChoiceAnswerRepository,
 				QuestionListRepository questionListRepository, 
 				QuestionRepository questionRepository,
 				QuestionListService questionListService,
 				QuestionService questionService,
-				SingleChoiceQuestionService singleChoiceQuestionService,
 				MultiChoiceQuestionService multiChoiceQuestionService,
-				CorrectSingleChoiceAnswerService correctSingleChoiceAnswerService,
 				CorrectMultiChoiceAnswerService correctMultiChoiceAnswerService,
-				SingleChoiceAnswerService singleChoiceAnswerService,
 				CorrectAnswerService correctAnswerService,
 				TestService testService,
 				AnswerService answerService,
@@ -63,34 +52,22 @@ public class TasApplication {
 				GradeService gradeService) {
 			
 			return (args) -> {
-				DummyData.populateData(singleChoiceQuestionRepository, 
-						multiChoiceQuestionRepository, 
-						correctSingleChoiceAnswerRepository,  
+				DummyData.populateData(multiChoiceQuestionRepository, 
 						correctMultiChoiceAnswerRepository, 
 						questionListRepository, 
 						questionRepository,
 						questionListService,
 						questionService,
-						singleChoiceQuestionService,
 						multiChoiceQuestionService,
-						correctSingleChoiceAnswerService,
 						correctMultiChoiceAnswerService,
-						singleChoiceAnswerService,
 						correctAnswerService,
 						testService,
 						answerService, 
 						testResponseService,
 						answerListService,
 						assessmentService,
-						gradeService);
-			//	correctSingleChoiceAnswerRepository.saveAll(DummyData.obtainDummySingleChoiceQuestions().getAnswers());
-			//	singleChoiceQuestionRepository.saveAll(DummyData.obtainDummySingleChoiceQuestions().getQuestions());
-			//	multiChoiceQuestionRepository.saveAll(DummyData.obtainDummyMultiChoiceQuestions().getQuestions());
-			//	correctMultiChoiceAnswerRepository.saveAll(DummyData.obtainDummyMultiChoiceQuestions().getAnswers());
-			
-				
+						gradeService);				
 			};
-		
 	}
 
 }

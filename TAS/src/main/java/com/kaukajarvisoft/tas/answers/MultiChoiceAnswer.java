@@ -34,15 +34,11 @@ public class MultiChoiceAnswer {
 	
 	String commentOnAnswer;
 	@ElementCollection(targetClass=String.class)
-	Map<Long, String> commentOnChoices;
+	List<String> commentOnChoices;
 	
 	
 	@OneToOne
 	Answer answer;
 	
-	public MultiChoiceAnswer() {
-		super();
-		type = QuestionTypes.MULTI_CHOICE;
-	}
 
 }

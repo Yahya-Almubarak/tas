@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-import com.kaukajarvisoft.tas.questions.QuestionList;
+import com.kaukajarvisoft.tas.questionlist.QuestionList;
 
 
 @Repository

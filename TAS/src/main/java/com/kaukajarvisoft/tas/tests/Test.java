@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
-import com.kaukajarvisoft.tas.questions.QuestionList;
+import com.kaukajarvisoft.tas.questionlist.QuestionList;
 import com.kaukajarvisoft.tas.users.TasUser;
 
 import lombok.Data;

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.kaukajarvisoft.tas.answers.AnswerList;
 import com.kaukajarvisoft.tas.repositories.TestResponseRepository;
 import com.kaukajarvisoft.tas.tests.TestResponse;
+import com.kaukajarvisoft.tas.tests.TestResponses;
 
 @Service
 public class TestResponseService {
@@ -22,8 +23,11 @@ public class TestResponseService {
 		return testResponseRepository.findById(id).get();
 	}
 	
-	public List<TestResponse> getTestResponses() {
-		return testResponseRepository.findAll();
+	public TestResponses getTestResponses() {
+		TestResponses testResponses = new TestResponses();
+		List<TestResponse> listOfTestResponses = testResponseRepository.findAll();
+		testResponses.setTestResponses(listOfTestResponses);
+		return testResponses;
 	}
 	
 	public TestResponse saveTestResponse(TestResponse testResponse) {
