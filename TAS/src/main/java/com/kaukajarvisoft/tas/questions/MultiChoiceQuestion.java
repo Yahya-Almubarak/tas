@@ -21,14 +21,8 @@ import com.kaukajarvisoft.tas.users.TasUser;
 import lombok.Data;
 @Data
 @Entity
-public class MultiChoiceQuestion {
-	@Id 
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	Long  id;
-	QuestionTypes type;
-	String name;
-	String description;
-	Locale local;
+public class MultiChoiceQuestion extends Question{
+	
 	
 	Duration timeToPresent;
 	Duration timeToAnswer; 
@@ -41,12 +35,9 @@ public class MultiChoiceQuestion {
 	
 	String body;
 	
-	@ElementCollection(targetClass=String.class, fetch=FetchType.EAGER)
-	List<String> choices;
+	@ElementCollection(targetClass=String.class)
+	List<String> options;
 	
-	
-	@OneToOne
-	Question question;
 	
 	@OneToOne
 	TasUser author;

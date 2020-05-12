@@ -1,5 +1,7 @@
 package com.kaukajarvisoft.tas.services;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,7 @@ import com.kaukajarvisoft.tas.users.TasUser;
 import com.kaukajarvisoft.tas.users.UserGroup;
 
 @Service
+@Transactional
 public class UserGroupService {
 	@Autowired
 	UserGroupRepository userGroupRepository;

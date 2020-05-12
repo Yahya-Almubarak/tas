@@ -6,22 +6,27 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import com.kaukajarvisoft.tas.answers.Answer;
 
 import lombok.Data;
 
 @Data
 @Entity
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public class Question {
-	/* This class is intended to be stored in question list. The real questions; SingleChoiceQustion, multiChoiceQuestion,  etc
-	 * point to it. The purpose is to allow QuestionList to store different type of questions. The OOP solution is normally 
-	 * make this class as a super class for others but for complexity or lack of knowledge how to do it in
-	 * JPA, this approach is followed.
-	 */
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	Long id;
+	
 	QuestionTypes type;
 	String name;
 	String description;
 	Locale local;
+	
 }

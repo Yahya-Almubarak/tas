@@ -26,7 +26,7 @@ public class Test {
 	String description;
 	Locale local;
 	
-	@OneToOne
+    @OneToOne
 	TasUser author;
 	
 	@OneToOne

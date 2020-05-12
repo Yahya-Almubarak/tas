@@ -2,6 +2,8 @@ package com.kaukajarvisoft.tas.services;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,7 @@ import com.kaukajarvisoft.tas.tests.Test;
 import com.kaukajarvisoft.tas.tests.Tests;
 
 @Service
+@Transactional
 public class TestService {
 	@Autowired
 	private TestRepository testRepository;

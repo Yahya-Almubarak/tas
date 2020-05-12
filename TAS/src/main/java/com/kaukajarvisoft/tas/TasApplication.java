@@ -9,18 +9,11 @@ import org.springframework.context.annotation.ComponentScan;
 
 import com.kaukajarvisoft.tas.assesment.AssessmentHandler;
 import com.kaukajarvisoft.tas.dummydata.DummyData;
-import com.kaukajarvisoft.tas.repositories.CorrectMultiChoiceAnswerRepository;
-import com.kaukajarvisoft.tas.repositories.MultiChoiceQuestionRepository;
-import com.kaukajarvisoft.tas.repositories.QuestionListRepository;
-import com.kaukajarvisoft.tas.repositories.QuestionRepository;
-import com.kaukajarvisoft.tas.services.AnswerListService;
-import com.kaukajarvisoft.tas.services.AnswerService;
-import com.kaukajarvisoft.tas.services.CorrectAnswerService;
 import com.kaukajarvisoft.tas.services.CorrectMultiChoiceAnswerService;
 import com.kaukajarvisoft.tas.services.GradeService;
+import com.kaukajarvisoft.tas.services.MultiChoiceAnswerService;
 import com.kaukajarvisoft.tas.services.MultiChoiceQuestionService;
 import com.kaukajarvisoft.tas.services.QuestionListService;
-import com.kaukajarvisoft.tas.services.QuestionService;
 import com.kaukajarvisoft.tas.services.TestResponseService;
 import com.kaukajarvisoft.tas.services.TestService;
 
@@ -35,36 +28,23 @@ public class TasApplication {
 	}
 		@Bean
 		public CommandLineRunner demo(
-				MultiChoiceQuestionRepository multiChoiceQuestionRepository, 
-				CorrectMultiChoiceAnswerRepository correctMultiChoiceAnswerRepository,
-				QuestionListRepository questionListRepository, 
-				QuestionRepository questionRepository,
 				QuestionListService questionListService,
-				QuestionService questionService,
 				MultiChoiceQuestionService multiChoiceQuestionService,
+				MultiChoiceAnswerService multiChoiceAnswerService,
 				CorrectMultiChoiceAnswerService correctMultiChoiceAnswerService,
-				CorrectAnswerService correctAnswerService,
 				TestService testService,
-				AnswerService answerService,
 				TestResponseService testResponseService,
-				AnswerListService answerListService,
 				AssessmentHandler assessmentService,
 				GradeService gradeService) {
 			
 			return (args) -> {
-				DummyData.populateData(multiChoiceQuestionRepository, 
-						correctMultiChoiceAnswerRepository, 
-						questionListRepository, 
-						questionRepository,
+				DummyData.populateData(
 						questionListService,
-						questionService,
 						multiChoiceQuestionService,
+						multiChoiceAnswerService,
 						correctMultiChoiceAnswerService,
-						correctAnswerService,
 						testService,
-						answerService, 
 						testResponseService,
-						answerListService,
 						assessmentService,
 						gradeService);				
 			};

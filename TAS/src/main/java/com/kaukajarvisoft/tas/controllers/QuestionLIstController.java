@@ -36,6 +36,14 @@ public class QuestionLIstController {
 		return new ResponseEntity<QuestionLists>(questionLists, HttpStatus.OK);
 	}
 	
+	@GetMapping("/questionlistsreturndefault")
+	public ResponseEntity<QuestionLists> getQuestionListReturnDefault() {
+		QuestionLists questionLists = questionListService.getQuestionListsReturnDefault();
+		if(questionLists == null) 
+			return new ResponseEntity<QuestionLists>(questionLists, HttpStatus.NOT_FOUND);
+		return new ResponseEntity<QuestionLists>(questionLists, HttpStatus.OK);
+	}
+	
 	@PostMapping("/createlist")
 	public ResponseEntity<QuestionList> postQuestionList(@RequestBody QuestionList questionList) {
 		try {

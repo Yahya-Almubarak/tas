@@ -2,25 +2,25 @@ package com.kaukajarvisoft.tas.services;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kaukajarvisoft.tas.answers.CorrectAnswer;
 import com.kaukajarvisoft.tas.answers.CorrectMultiChoiceAnswer;
-import com.kaukajarvisoft.tas.questions.MultiChoiceQuestion;
 import com.kaukajarvisoft.tas.questions.Question;
 import com.kaukajarvisoft.tas.repositories.CorrectMultiChoiceAnswerRepository;
 
 @Service
+@Transactional
 public class CorrectMultiChoiceAnswerService {
 	
 
 	@Autowired
 	CorrectMultiChoiceAnswerRepository correctMultiChoiceAnswerRepository;
 	
-	@Autowired
-	CorrectAnswerService correctAnswerService;
-	
+
+		
 	public CorrectMultiChoiceAnswer getCorrectMultiChoiceAnswer(Long id) {
 		CorrectMultiChoiceAnswer correctMultiChoiceAnswer  = correctMultiChoiceAnswerRepository.findById(id).get();
 		return correctMultiChoiceAnswer;
@@ -34,14 +34,15 @@ public class CorrectMultiChoiceAnswerService {
 		return correctMultiChoiceAnswerRepository.save(correctMultiChoiceAnswer);
 	}
 	
-	public CorrectMultiChoiceAnswer getCorrectMultiChoiceAnswer(CorrectAnswer correctAnswer) {
-		return correctMultiChoiceAnswerRepository.findByCorrectAnswer(correctAnswer);
+	
+	
+
+	public CorrectMultiChoiceAnswer getCorrectMultiChoiceAnswer(Question question) {
+		return correctMultiChoiceAnswerRepository.findByQuestion(question);
 	}
 	
-	public CorrectMultiChoiceAnswer getCorrectMultiChoiceAnswer(MultiChoiceQuestion multiChoiceQuestion) {
-		Question question = multiChoiceQuestion.getQuestion();
-		CorrectAnswer correctAnswer = correctAnswerService.getCorrectAnswer(question);
-		return this.getCorrectMultiChoiceAnswer(correctAnswer);	
+	public CorrectMultiChoiceAnswer getCorrectMultiChoiceAnswerByQuestionId(Long questionId) {
+		return correctMultiChoiceAnswerRepository.findByQuestion_Id(questionId);
 	}
 
 }

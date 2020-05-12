@@ -15,6 +15,5 @@ public interface MultiChoiceQuestionRepository extends PagingAndSortingRepositor
 	
 	List<MultiChoiceQuestion> findByLocal(Locale local);
 
-	MultiChoiceQuestion findByQuestion(Question question);
 
 }

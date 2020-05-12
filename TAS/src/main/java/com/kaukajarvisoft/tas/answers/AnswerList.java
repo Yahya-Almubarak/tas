@@ -22,6 +22,6 @@ public class AnswerList {
 	String description;
 	Locale local;
 	
-	@OneToMany(fetch=FetchType.EAGER, targetEntity=Answer.class)
+	@OneToMany(targetEntity=Answer.class, fetch=FetchType.LAZY)
 	List<Answer> answers;
 }

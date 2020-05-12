@@ -15,34 +15,22 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import com.kaukajarvisoft.tas.questions.MultiChoiceQuestion;
+import com.kaukajarvisoft.tas.questions.Question;
 import com.kaukajarvisoft.tas.questions.QuestionTypes;
 import lombok.Data;
 
 @Data
 @Entity
-public class CorrectMultiChoiceAnswer{
-	@Id 
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	Long  id;
-
-	String name;
-	Locale local;
-	String description;
-	QuestionTypes type;
+public class CorrectMultiChoiceAnswer extends Answer{
 	
-	@ElementCollection(targetClass=Long.class, fetch=FetchType.EAGER)
-	List<Long> choices;
+	@ElementCollection(targetClass=Long.class)
+	List<Long> correctChoices;
 	
-
 	String commentOnAnswer;
+	
+	
 	@ElementCollection(targetClass=String.class)
 	List<String> commentOnChoices;
-	
-	
-	
-	@OneToOne
-	CorrectAnswer correctAnswer;
-	
 	
 	
 

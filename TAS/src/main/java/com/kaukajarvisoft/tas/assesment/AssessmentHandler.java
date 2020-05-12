@@ -3,19 +3,18 @@ package com.kaukajarvisoft.tas.assesment;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kaukajarvisoft.tas.answers.Answer;
-import com.kaukajarvisoft.tas.answers.AnswerList;
-import com.kaukajarvisoft.tas.answers.CorrectAnswer;
 import com.kaukajarvisoft.tas.answers.CorrectMultiChoiceAnswer;
 import com.kaukajarvisoft.tas.answers.MultiChoiceAnswer;
 import com.kaukajarvisoft.tas.questionlist.QuestionList;
 import com.kaukajarvisoft.tas.questions.MultiChoiceQuestion;
 import com.kaukajarvisoft.tas.questions.Question;
 import com.kaukajarvisoft.tas.questions.QuestionTypes;
-import com.kaukajarvisoft.tas.services.CorrectAnswerService;
 import com.kaukajarvisoft.tas.services.CorrectFalseListService;
 import com.kaukajarvisoft.tas.services.CorrectMultiChoiceAnswerService;
 import com.kaukajarvisoft.tas.services.MultiChoiceAnswerService;
@@ -29,10 +28,10 @@ import com.kaukajarvisoft.tas.tests.TestResponse;
 
 
 @Service
+@Transactional
 public class AssessmentHandler {
 	
-	@Autowired
-	CorrectAnswerService correctAnswerService;
+	
 	@Autowired
 	CorrectMultiChoiceAnswerService correctMultiChoiceAnswerService;
 	@Autowired
@@ -54,22 +53,21 @@ public class AssessmentHandler {
 		GradeCriteria gradeCriteria = test.getGradeCriteria();
 		QuestionList questionList = test.getQuestionList();
 		List<Question> questions = questionList.getQuestions();
-		AnswerList answerList = testResponse.getAnswerList();
-		List<Answer> answers = answerList.getAnswers();
+	//	List<MultiChoiceAnswer> answers = testResponse.getAnswers();
+		List<MultiChoiceAnswer> answers = new ArrayList<MultiChoiceAnswer>();
 		Question question;
 		Answer answer;
-		MultiChoiceQuestion multiChoiceQuestion;
-		MultiChoiceAnswer multiChoiceAnswer;
 		List<List<Long>> correctFalseMap = new ArrayList<>();
 		List<Long> assessedSelections;
 		for (int i = 0; i < questions.size(); i++) {
 			question = questions.get(i);
 			answer = answers.get(i);
 			assessedSelections = new ArrayList<>();
-			
-			multiChoiceQuestion = multiChoiceQuestionService.getMultiChoiceQuestion(question);
-			multiChoiceAnswer = multiChoiceAnswerService.getMultiChoiceAnswer(answer);
-			assessedSelections = assess(multiChoiceQuestion, multiChoiceAnswer);
+			if(question.getType() == QuestionTypes.SINGLE_SELECT_MULTI_CHOICE || question.getType() == QuestionTypes.MULTI_SELECT_MULTI_CHOICE) {
+				assessedSelections = assess((MultiChoiceQuestion)question, (MultiChoiceAnswer)answer);
+			} else {
+				return null;
+			}
 			
 			correctFalseMap.add(assessedSelections);
 		}
@@ -129,10 +127,11 @@ public class AssessmentHandler {
 	
 
 	public List<Long> assess(MultiChoiceQuestion multiChoiceQuestion, MultiChoiceAnswer multiChoiceAnswer) {
+		
 		List<Long> choices = multiChoiceAnswer.getChoices();
 		CorrectMultiChoiceAnswer correctMultiChoiceAnswer = correctMultiChoiceAnswerService.getCorrectMultiChoiceAnswer(multiChoiceQuestion);
-		Long numberOfChoices = 0L + multiChoiceQuestion.getChoices().size();
-		List<Long> correctChoices = correctMultiChoiceAnswer.getChoices();
+		Long numberOfChoices = 0L + multiChoiceQuestion.getOptions().size();
+		List<Long> correctChoices = correctMultiChoiceAnswer.getCorrectChoices();
 		List<Long> assessedChoices = new ArrayList<>();
 		// value of 0 in assessedChoices means wrong answer, the correct choice is not selected
 		// value of 1 in assessedChoices means wrong answer, the wrong choice is selected
@@ -167,7 +166,6 @@ public class AssessmentHandler {
 		QuestionList questionsList = test.getQuestionList();
 		List<Question> questions = questionsList.getQuestions();
 		Question question;
-		CorrectAnswer correctAnswer;
 		CorrectMultiChoiceAnswer correctMultiChoiceAnswer;
 		if(gradeCriteria.getEveryWholeQuestionGetsOnePointInTotal()) {
 			totalPoints = 0L + questions.size();
@@ -175,11 +173,10 @@ public class AssessmentHandler {
 		else {
 			for (int i = 0; i < questions.size(); i++) {
 				question = questions.get(i);
-				correctAnswer = correctAnswerService.getCorrectAnswer(question);
-				correctMultiChoiceAnswer = correctMultiChoiceAnswerService.getCorrectMultiChoiceAnswer(correctAnswer);
+				correctMultiChoiceAnswer = correctMultiChoiceAnswerService.getCorrectMultiChoiceAnswer(question);
 				if(question.getType() == QuestionTypes.SINGLE_SELECT_MULTI_CHOICE) {
 					if(gradeCriteria.getEveryChoiceInSingleChoiceQuestionGetsPointInTotal()) {
-						totalPoints += correctMultiChoiceAnswer.getChoices().size();
+						totalPoints += correctMultiChoiceAnswer.getCorrectChoices().size();
 					} else {
 						totalPoints++;
 						//System.out.println(" Qusetion no: " + i + " hass " + 1 +" scored choices");
@@ -187,10 +184,10 @@ public class AssessmentHandler {
 					
 				} else if(question.getType() == QuestionTypes.MULTI_SELECT_MULTI_CHOICE) {					
 					if(gradeCriteria.getEveryChoiceInMultiChoiceQuestionGetsPointInTotal()) {
-						totalPoints += correctMultiChoiceAnswer.getChoices().size();
+						totalPoints += correctMultiChoiceAnswer.getCorrectChoices().size();
 						//System.out.println(" Qusetion no: " + i + " hasss " + multiChoiceQuestionService.getMultiChoiceQuestion(question).getChoices().size() +" scored choices");
 					} else if(gradeCriteria.getOnlyCorrectChoicesInMultiChoiceQuestionGetsPointInTotal()) {
-						totalPoints += correctMultiChoiceAnswer.getChoices().stream().filter(n -> n.longValue() == 1L).count();
+						totalPoints += correctMultiChoiceAnswer.getCorrectChoices().stream().filter(n -> n.longValue() == 1L).count();
 						//System.out.println(" Qusetion no: " + i + " hasssss " + correctMultiChoiceAnswer.getChoices().stream().filter(n -> n.longValue() == 1L).count() +" scored choices");
 					}
 					

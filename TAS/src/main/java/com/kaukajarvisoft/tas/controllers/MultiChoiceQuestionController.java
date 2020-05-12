@@ -28,13 +28,6 @@ public class MultiChoiceQuestionController {
 		return new ResponseEntity<MultiChoiceQuestion>(question, HttpStatus.OK);
 	}
 	
-	@GetMapping("/multiquestions/{local}")
-	public ResponseEntity<List<MultiChoiceQuestion>> getMultiChoiceQuestions(@PathVariable String local){
-		List<MultiChoiceQuestion> questions = multiChoiceQuestionService.getMultiChoiceQuestions(local); 
-		if(questions == null)
-			return new ResponseEntity<List<MultiChoiceQuestion>>(questions, HttpStatus.NOT_FOUND);
-		return new ResponseEntity<List<MultiChoiceQuestion>>(questions, HttpStatus.OK);
-	}
 	
 	@GetMapping("/multiquestions")
 	public ResponseEntity<List<MultiChoiceQuestion>> getMultiChoiceQuestions(){
@@ -46,10 +39,12 @@ public class MultiChoiceQuestionController {
 	
 	
 	
-	@PostMapping("/multiquestion")
-	  public ResponseEntity<MultiChoiceQuestion> postMultiChoiceQuestion(@RequestBody MultiChoiceQuestion question) {
+	
+	
+	@PostMapping("/multiquestion/{listId}")
+	  public ResponseEntity<MultiChoiceQuestion> postMultiChoiceQuestion(@RequestBody MultiChoiceQuestion question, @PathVariable Long listId) {
 	    try {
-	      MultiChoiceQuestion _question = multiChoiceQuestionService.saveMultiChoiceQuestion(question);
+	      MultiChoiceQuestion _question = multiChoiceQuestionService.saveMultiChoiceQuestionAnddaddToList( question, listId);
 	      return new ResponseEntity<MultiChoiceQuestion>(_question, HttpStatus.CREATED);
 	    } catch (Exception e) {
 	      return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);

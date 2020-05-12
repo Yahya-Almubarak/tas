@@ -2,14 +2,10 @@ package com.kaukajarvisoft.tas.dummydata;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import com.kaukajarvisoft.tas.answers.Answer;
-import com.kaukajarvisoft.tas.answers.AnswerList;
-import com.kaukajarvisoft.tas.answers.CorrectAnswer;
 import com.kaukajarvisoft.tas.answers.CorrectMultiChoiceAnswer;
 import com.kaukajarvisoft.tas.answers.MultiChoiceAnswer;
 import com.kaukajarvisoft.tas.assesment.AssessmentHandler;
@@ -21,11 +17,9 @@ import com.kaukajarvisoft.tas.repositories.CorrectMultiChoiceAnswerRepository;
 import com.kaukajarvisoft.tas.repositories.MultiChoiceQuestionRepository;
 import com.kaukajarvisoft.tas.repositories.QuestionListRepository;
 import com.kaukajarvisoft.tas.repositories.QuestionRepository;
-import com.kaukajarvisoft.tas.services.AnswerListService;
-import com.kaukajarvisoft.tas.services.AnswerService;
-import com.kaukajarvisoft.tas.services.CorrectAnswerService;
 import com.kaukajarvisoft.tas.services.CorrectMultiChoiceAnswerService;
 import com.kaukajarvisoft.tas.services.GradeService;
+import com.kaukajarvisoft.tas.services.MultiChoiceAnswerService;
 import com.kaukajarvisoft.tas.services.MultiChoiceQuestionService;
 import com.kaukajarvisoft.tas.services.QuestionListService;
 import com.kaukajarvisoft.tas.services.QuestionService;
@@ -40,22 +34,16 @@ import com.kaukajarvisoft.tas.tests.Tests;
 public class DummyData {
 
 	
-	static public void populateData(MultiChoiceQuestionRepository multiChoiceQuestionRepository,
-			CorrectMultiChoiceAnswerRepository correctMultiChoiceAnswerRepository,
-			QuestionListRepository questionListRepository, 
-			QuestionRepository questionRepository,
+	static public void populateData(
 			QuestionListService questionListService,
-			QuestionService questionService,
 			MultiChoiceQuestionService multiChoiceQuestionService,
+			MultiChoiceAnswerService multiChoiceAnswerService,
 			CorrectMultiChoiceAnswerService correctMultiChoiceAnswerService,
-			CorrectAnswerService correctAnswerService,
 			TestService testService,
-			AnswerService answerService,
 			TestResponseService testResponseService,
-			AnswerListService answerListService,
 			AssessmentHandler assessmentService,
 			GradeService gradeService
-			) {
+			) { 
 	//	obtainDummySingleChoiceQuestions(singleChoiceQuestionRepository,correctSingleChoiceAnswerRepository, questionListRepository,questionRepository);
 	//	obtainDummyMultiChoiceQuestions(multiChoiceQuestionRepository, correctMultiChoiceAnswerRepository, questionListRepository,questionRepository);
 	//	obtainDummySingleChoiceQuestionsToSecondList(singleChoiceQuestionRepository, correctSingleChoiceAnswerRepository, questionListRepository, questionRepository);
@@ -63,8 +51,6 @@ public class DummyData {
 				multiChoiceQuestionService,
 				correctMultiChoiceAnswerService,
 				questionListService, 
-				questionService,
-				correctAnswerService,
 				testService); 
 	
 	
@@ -72,21 +58,15 @@ public class DummyData {
 			multiChoiceQuestionService,
 			correctMultiChoiceAnswerService,
 			questionListService, 
-			questionService,
-			correctAnswerService,
 			testService); 
 	
-	answerTest(multiChoiceQuestionService,
-			correctMultiChoiceAnswerService, 
+	/* answerTest(multiChoiceQuestionService, 
 			questionListService, 
-			questionService,
-			correctAnswerService,
 			testService,
-			answerService,
 			testResponseService,
-			answerListService,
+			multiChoiceAnswerService,
 			assessmentService,
-			gradeService);
+			gradeService); */
 }
 	
 	/*
@@ -123,7 +103,7 @@ public class DummyData {
 				choices.put(1L, "Helsinki");
 				choices.put(2L, "Tokholma");
 				choices.put(3L, "Turku");
-				singleChoiceQuestion.setChoices(choices);
+				singleChoiceQuestion.setOptions(choices);
 				
 				questionRepository.save(question);
 				singleChoiceQuestion.setQuestion(question);
@@ -169,7 +149,7 @@ public class DummyData {
 		choices.put(1L, "Helsinki");
 		choices.put(2L, "Stockholm");
 		choices.put(3L, "Turku");
-		singleChoiceQuestion.setChoices(choices);
+		singleChoiceQuestion.setOptions(choices);
 		
 		questionRepository.save(question);
 		singleChoiceQuestion.setQuestion(question);
@@ -231,7 +211,7 @@ public class DummyData {
 		choices.put(1L, "Africa");
 		choices.put(2L, "Amerika");
 		choices.put(3L, "Russia");
-		multiChoiceQuestion.setChoices(choices);
+		multiChoiceQuestion.setOptions(choices);
 
 		questionRepository.save(question);
 		multiChoiceQuestion.setQuestion(question);
@@ -266,7 +246,7 @@ public class DummyData {
 		choices.put(1L, "Afrikka");
 		choices.put(2L, "Amerikka");
 		choices.put(3L, "Venäjä");
-		multiChoiceQuestion.setChoices(choices);
+		multiChoiceQuestion.setOptions(choices);
 		
 		questionRepository.save(question);
 		multiChoiceQuestion.setQuestion(question);
@@ -303,7 +283,7 @@ public class DummyData {
 		choices.put(1L, "افريقيا");
 		choices.put(2L, "امريكا");
 		choices.put(3L, "روسيا");
-		multiChoiceQuestion.setChoices(choices);
+		multiChoiceQuestion.setOptions(choices);
 		
 		questionRepository.save(question);
 		multiChoiceQuestion.setQuestion(question);
@@ -356,7 +336,7 @@ public class DummyData {
 		choices.put(1L, "call for help");
 		choices.put(2L, "first of may");
 		choices.put(3L, "labour day");
-		singleChoiceQuestion.setChoices(choices);
+		singleChoiceQuestion.setOptions(choices);
 		
 		questionRepository.save(question);
 		singleChoiceQuestion.setQuestion(question);
@@ -399,7 +379,7 @@ public class DummyData {
 		choices.put(1L, "30");
 		choices.put(2L, "365");
 		choices.put(3L, "24");
-		singleChoiceQuestion.setChoices(choices);
+		singleChoiceQuestion.setOptions(choices);
 		
 		questionRepository.save(question);
 		singleChoiceQuestion.setQuestion(question);
@@ -431,20 +411,18 @@ public class DummyData {
 	static public void obtainDummyQuestionandAddItToListFromServices_I(MultiChoiceQuestionService multiChoiceQuestionService,
 			CorrectMultiChoiceAnswerService correctMultiChoiceAnswerService, 
 			QuestionListService questionListService, 
-			QuestionService questionService,
-			CorrectAnswerService correctAnswerService,
 			TestService testService) {
 		
 	
 		QuestionList questionList = new QuestionList();
+		questionList.setName("First qestion list");
 		questionList.setQuestions(new ArrayList<>());
 		questionList = questionListService.createList(questionList);
 		
-		Question question;
-		List<String> choices;
-		CorrectAnswer correctAnswer; 
+		List<String> options;
 		MultiChoiceQuestion multiChoiceQuestion = new MultiChoiceQuestion() ;
-		CorrectMultiChoiceAnswer correctMultiChoiceAnswer;
+		CorrectMultiChoiceAnswer correctMultiChoiceAnswer = new CorrectMultiChoiceAnswer();
+		
 		String body;
 		
 		// -------------------------------
@@ -454,7 +432,7 @@ public class DummyData {
 		
 		// -----------------------------------
 	
-		choices = new ArrayList<>();
+		options = new ArrayList<>();
 		
 		multiChoiceQuestion.setLocal(new Locale("en"));
 		multiChoiceQuestion.setName("Question one");
@@ -464,16 +442,15 @@ public class DummyData {
 		body = "What is the capital of Finland?";
 		multiChoiceQuestion.setBody(body);
 	
-		choices.add("Helsinki");
-		choices.add("Stockholm");
-		choices.add("Turku");
-		multiChoiceQuestion.setChoices(choices);
+		options.add("Helsinki");
+		options.add("Stockholm");
+		options.add("Turku");
+		multiChoiceQuestion.setOptions(options);
 		
 		
 		// ----- 
 		multiChoiceQuestion = multiChoiceQuestionService.saveMultiChoiceQuestion(multiChoiceQuestion);
-		question = questionService.createQuestion(multiChoiceQuestion);
-		questionListService.addQuestionToQuestionList(questionList, question);
+		questionListService.addQuestionToQuestionList(questionList, multiChoiceQuestion);
 		
 		
 		
@@ -486,10 +463,11 @@ public class DummyData {
 		correctMultiChoiceAnswer.setLocal(new Locale("en"));
 		correctMultiChoiceAnswer.setName("Answer 1");
 		correctMultiChoiceAnswer.setDescription("Answer for dummy question 1");
-		correctMultiChoiceAnswer.setChoices(Arrays.asList(new Long[] {1L, 0L, 0L}));
-		correctAnswer = correctAnswerService.createCorrectAnswer(correctMultiChoiceAnswer);
-		correctAnswer.setQuestion(question);
-		correctAnswerService.saveCorrectAnswer(correctAnswer);
+		correctMultiChoiceAnswer.setCorrectChoices(Arrays.asList(new Long[] {1L, 0L, 0L}));
+		
+		
+		correctMultiChoiceAnswer.setQuestion(multiChoiceQuestion);
+		correctMultiChoiceAnswerService.saveCorrectMultiChoiceAnswer(correctMultiChoiceAnswer);
 		
 		
 		//________________________________________________
@@ -507,16 +485,15 @@ public class DummyData {
 		body = "Mitä on Suomen pääkaupunki?";
 		multiChoiceQuestion.setBody(body);
 		
-		choices = new ArrayList<>();
-		choices.add("Helsinki");
-		choices.add("Tokholma");
-		choices.add("Turku");
-		multiChoiceQuestion.setChoices(choices);
+		options = new ArrayList<>();
+		options.add("Helsinki");
+		options.add("Tokholma");
+		options.add("Turku");
+		multiChoiceQuestion.setOptions(options);
 		
 		
 		multiChoiceQuestion = multiChoiceQuestionService.saveMultiChoiceQuestion(multiChoiceQuestion);
-		question = questionService.createQuestion(multiChoiceQuestion);
-		questionListService.addQuestionToQuestionList(questionList, question);
+		questionListService.addQuestionToQuestionList(questionList, multiChoiceQuestion);
 		
 	
 		
@@ -529,11 +506,10 @@ public class DummyData {
 		correctMultiChoiceAnswer.setLocal(new Locale("fi"));
 		correctMultiChoiceAnswer.setName("Vastaus 2");
 		correctMultiChoiceAnswer.setDescription("Vastaus 1");
-		correctMultiChoiceAnswer.setChoices(Arrays.asList(new Long[] {1L, 0L, 0L}));
+		correctMultiChoiceAnswer.setCorrectChoices(Arrays.asList(new Long[] {1L, 0L, 0L}));
 		
-		correctAnswer = correctAnswerService.createCorrectAnswer(correctMultiChoiceAnswer);
-		correctAnswer.setQuestion(question);
-		correctAnswerService.saveCorrectAnswer(correctAnswer);
+		correctMultiChoiceAnswer.setQuestion(multiChoiceQuestion);
+		correctMultiChoiceAnswerService.saveCorrectMultiChoiceAnswer(correctMultiChoiceAnswer);
 		
 
 		
@@ -543,8 +519,7 @@ public class DummyData {
 			multiChoiceQuestion = new MultiChoiceQuestion();
 			
 			// -----------------------------------
-			choices = new ArrayList<>();
-			
+			options = new ArrayList<>();
 			multiChoiceQuestion.setLocal(new Locale("en"));
 			multiChoiceQuestion.setName("Multi Question");
 			multiChoiceQuestion.setDescription("About continent question");
@@ -554,14 +529,13 @@ public class DummyData {
 			multiChoiceQuestion.setBody(body);
 			
 			
-			choices.add("Africa");
-			choices.add("Amerika");
-			choices.add("Russia");
-			multiChoiceQuestion.setChoices(choices);
+			options.add("Africa");
+			options.add("Amerika");
+			options.add("Russia");
+			multiChoiceQuestion.setOptions(options);
 
 			multiChoiceQuestion = multiChoiceQuestionService.saveMultiChoiceQuestion(multiChoiceQuestion);
-			question = questionService.createQuestion(multiChoiceQuestion);
-			questionListService.addQuestionToQuestionList(questionList, question);
+			questionListService.addQuestionToQuestionList(questionList, multiChoiceQuestion);
 			
 			//____________________
 			//_______________________ Correct answer 3
@@ -569,12 +543,11 @@ public class DummyData {
 			correctMultiChoiceAnswer.setLocal(new Locale("en"));
 			correctMultiChoiceAnswer.setName("Answer 1");
 			correctMultiChoiceAnswer.setDescription("Answer for dummy question 1");
-			correctMultiChoiceAnswer.setChoices(Arrays.asList(new Long[]{1L, 1L, 0L}));
+			correctMultiChoiceAnswer.setCorrectChoices(Arrays.asList(new Long[]{1L, 1L, 0L}));
 			
 
-			correctAnswer = correctAnswerService.createCorrectAnswer(correctMultiChoiceAnswer);
-			correctAnswer.setQuestion(question);
-			correctAnswerService.saveCorrectAnswer(correctAnswer);
+			correctMultiChoiceAnswer.setQuestion(multiChoiceQuestion);
+			correctMultiChoiceAnswerService.saveCorrectMultiChoiceAnswer(correctMultiChoiceAnswer);
 			
 		
 			
@@ -582,7 +555,6 @@ public class DummyData {
 			// -------------------------------
 			// _______________________ question 4
 			multiChoiceQuestion = new MultiChoiceQuestion();
-			question = new Question();
 			multiChoiceQuestion.setLocal(new Locale("fi"));
 			multiChoiceQuestion.setName("vaihtoehto Kysymys");
 			multiChoiceQuestion.setDescription("Teko Kysymys maanosista");
@@ -591,15 +563,14 @@ public class DummyData {
 			body = "Mitä niitä on maanosaia?";
 			multiChoiceQuestion.setBody(body);
 			
-			choices = new ArrayList<>();
-			choices.add("Afrikka");
-			choices.add("Amerikka");
-			choices.add("Venäjä");
-			multiChoiceQuestion.setChoices(choices);
+			options = new ArrayList<>();
+			options.add("Afrikka");
+			options.add("Amerikka");
+			options.add("Venäjä");
+			multiChoiceQuestion.setOptions(options);
 			
 			multiChoiceQuestion = multiChoiceQuestionService.saveMultiChoiceQuestion(multiChoiceQuestion);
-			question = questionService.createQuestion(multiChoiceQuestion);
-			questionListService.addQuestionToQuestionList(questionList, question);
+			questionListService.addQuestionToQuestionList(questionList, multiChoiceQuestion);
 			
 			
 			//-------------------------
@@ -608,20 +579,18 @@ public class DummyData {
 				correctMultiChoiceAnswer.setLocal(new Locale("fi"));
 				correctMultiChoiceAnswer.setName("Vastaus 2");
 				correctMultiChoiceAnswer.setDescription("Vastaus 2");
-				correctMultiChoiceAnswer .setChoices(Arrays.asList(new Long[]{1L, 1L, 0L}));
+				correctMultiChoiceAnswer.setCorrectChoices(Arrays.asList(new Long[]{1L, 1L, 0L}));
 				
 
-				correctAnswer = correctAnswerService.createCorrectAnswer(correctMultiChoiceAnswer);
-				correctAnswer.setQuestion(question);
-				correctAnswerService.saveCorrectAnswer(correctAnswer);
+				correctMultiChoiceAnswer.setQuestion(multiChoiceQuestion);
+				correctMultiChoiceAnswerService.saveCorrectMultiChoiceAnswer(correctMultiChoiceAnswer);
 				
 			
-			
+			/*
 			//______________________
 			//______________________ question 5	
 				
 			multiChoiceQuestion = new MultiChoiceQuestion();
-			question = new Question();
 			multiChoiceQuestion.setLocal(new Locale("ar"));
 			multiChoiceQuestion.setName("سؤال متعدد");
 			multiChoiceQuestion.setDescription("سؤال عن القارات");
@@ -630,16 +599,15 @@ public class DummyData {
 			body = "ما هي القارات من الاختيارات";
 			multiChoiceQuestion.setBody(body);
 			
-			choices = new ArrayList<>();
-			choices.add("افريقيا");
-			choices.add("امريكا");
-			choices.add("روسيا");
+			options = new ArrayList<>();
+			options.add("افريقيا");
+			options.add("امريكا");
+			options.add("روسيا");
 			
-			multiChoiceQuestion.setChoices(choices);
+			multiChoiceQuestion.setOptions(options);
 			
 			multiChoiceQuestion = multiChoiceQuestionService.saveMultiChoiceQuestion(multiChoiceQuestion);
-			question = questionService.createQuestion(multiChoiceQuestion);
-			questionListService.addQuestionToQuestionList(questionList, question);
+			questionListService.addQuestionToQuestionList(questionList, multiChoiceQuestion);
 			
 			//-------------------------
 			//______________________ Correct answer 5
@@ -647,11 +615,10 @@ public class DummyData {
 			correctMultiChoiceAnswer.setLocal(new Locale("ar"));
 			correctMultiChoiceAnswer.setName("Vastaus 3");
 			correctMultiChoiceAnswer.setDescription("Vastaus 3");
-			correctMultiChoiceAnswer.setChoices(Arrays.asList(new Long[]{1L, 1L, 0L}));
+			correctMultiChoiceAnswer.setCorrectChoices(Arrays.asList(new Long[]{1L, 1L, 0L}));
 
-			correctAnswer = correctAnswerService.createCorrectAnswer(correctMultiChoiceAnswer);
-			correctAnswer.setQuestion(question);
-			correctAnswerService.saveCorrectAnswer(correctAnswer);
+			correctMultiChoiceAnswer.setQuestion(multiChoiceQuestion);
+			correctMultiChoiceAnswerService.saveCorrectMultiChoiceAnswer(correctMultiChoiceAnswer);*/
 			
 			Test test = new Test();
 			test = testService.createTest(test);
@@ -663,7 +630,7 @@ public class DummyData {
 			test = testService.addGradeCriteria(test, gradeCriteria);
 			
 			
-			
+		
 			
 	}
 	
@@ -671,19 +638,15 @@ public class DummyData {
 	static public void obtainDummyQuestionandAddItToListFromServices_II(MultiChoiceQuestionService multiChoiceQuestionService,
 			CorrectMultiChoiceAnswerService correctMultiChoiceAnswerService, 
 			QuestionListService questionListService, 
-			QuestionService questionService,
-			CorrectAnswerService correctAnswerService,
 			TestService testService) {
 		
 	
 		QuestionList questionList = new QuestionList();
+		questionList.setName("Second qestion list");
 		questionList.setQuestions(new ArrayList<>());
 		questionList = questionListService.createList(questionList);
 		
-		Question question;
-		Question tempQuestion;
-		List<String> choices;
-		CorrectAnswer correctAnswer; 
+		List<String> options;
 		MultiChoiceQuestion multiChoiceQuestion;
 		CorrectMultiChoiceAnswer correctMultiChoiceAnswer;
 		String body;
@@ -696,7 +659,7 @@ public class DummyData {
 		// -----------------------------------
 	
 		multiChoiceQuestion = new MultiChoiceQuestion();
-		choices = new ArrayList<>();
+		options = new ArrayList<>();
 		
 		multiChoiceQuestion.setLocal(new Locale("en"));
 		multiChoiceQuestion.setName("Question one");
@@ -706,17 +669,15 @@ public class DummyData {
 		body = "What is the capital of Italy?";
 		multiChoiceQuestion.setBody(body);
 	
-		choices.add("Helsinki");
-		choices.add("Paris");
-		choices.add("Rome");
-		multiChoiceQuestion.setChoices(choices);
+		options.add("Helsinki");
+		options.add("Paris");
+		options.add("Rome");
+		multiChoiceQuestion.setOptions(options);
 		
 		
 		// ----- 
 		multiChoiceQuestion = multiChoiceQuestionService.saveMultiChoiceQuestion(multiChoiceQuestion);
-		question = questionService.createQuestion(multiChoiceQuestion);
-		questionListService.addQuestionToQuestionList(questionList, question);
-		
+		questionListService.addQuestionToQuestionList(questionList, multiChoiceQuestion);
 		
 		
 		
@@ -728,10 +689,11 @@ public class DummyData {
 		correctMultiChoiceAnswer.setLocal(new Locale("en"));
 		correctMultiChoiceAnswer.setName("Answer 1");
 		correctMultiChoiceAnswer.setDescription("Answer for dummy question 1");
-		correctMultiChoiceAnswer.setChoices(Arrays.asList(new Long[] {0L, 0L, 1L}));
-		correctAnswer = correctAnswerService.createCorrectAnswer(correctMultiChoiceAnswer);
-		correctAnswer.setQuestion(question);
-		correctAnswerService.saveCorrectAnswer(correctAnswer);
+		correctMultiChoiceAnswer.setCorrectChoices(Arrays.asList(new Long[] {0L, 0L, 1L}));
+		
+		
+		correctMultiChoiceAnswer.setQuestion(multiChoiceQuestion);
+		correctMultiChoiceAnswerService.saveCorrectMultiChoiceAnswer(correctMultiChoiceAnswer);
 		
 		
 		//________________________________________________
@@ -749,16 +711,15 @@ public class DummyData {
 		body = "Mitä on Viron pääkaupunki?";
 		multiChoiceQuestion.setBody(body);
 		
-		choices = new ArrayList<>();
-		choices.add("London");
-		choices.add("Tallin");
-		choices.add("Oslo");
-		multiChoiceQuestion.setChoices(choices);
+		options = new ArrayList<>();
+		options.add("London");
+		options.add("Tallin");
+		options.add("Oslo");
+		multiChoiceQuestion.setOptions(options);
 		
 		
 		multiChoiceQuestion = multiChoiceQuestionService.saveMultiChoiceQuestion(multiChoiceQuestion);
-		question = questionService.createQuestion(multiChoiceQuestion);
-		questionListService.addQuestionToQuestionList(questionList, question);
+		questionListService.addQuestionToQuestionList(questionList, multiChoiceQuestion);
 		
 	
 		
@@ -771,11 +732,10 @@ public class DummyData {
 		correctMultiChoiceAnswer.setLocal(new Locale("fi"));
 		correctMultiChoiceAnswer.setName("Vastaus 2");
 		correctMultiChoiceAnswer.setDescription("Vastaus 1");
-		correctMultiChoiceAnswer.setChoices(Arrays.asList(new Long[] {0L, 1L, 0L}));
+		correctMultiChoiceAnswer.setCorrectChoices(Arrays.asList(new Long[] {0L, 1L, 0L}));
 		
-		correctAnswer = correctAnswerService.createCorrectAnswer(correctMultiChoiceAnswer);
-		correctAnswer.setQuestion(question);
-		correctAnswerService.saveCorrectAnswer(correctAnswer);
+		correctMultiChoiceAnswer.setQuestion(multiChoiceQuestion);
+		correctMultiChoiceAnswerService.saveCorrectMultiChoiceAnswer(correctMultiChoiceAnswer);
 		
 
 		
@@ -785,7 +745,7 @@ public class DummyData {
 			multiChoiceQuestion = new MultiChoiceQuestion();
 			
 			// -----------------------------------
-			choices = new ArrayList<>();
+			options = new ArrayList<>();
 			
 			multiChoiceQuestion.setLocal(new Locale("en"));
 			multiChoiceQuestion.setName("Multi Question");
@@ -796,27 +756,24 @@ public class DummyData {
 			multiChoiceQuestion.setBody(body);
 			
 			
-			choices.add("Africa");
-			choices.add("Amerika");
-			choices.add("Russia");
-			multiChoiceQuestion.setChoices(choices);
+			options.add("Africa");
+			options.add("Amerika");
+			options.add("Russia");
+			multiChoiceQuestion.setOptions(options);
 
 			multiChoiceQuestion = multiChoiceQuestionService.saveMultiChoiceQuestion(multiChoiceQuestion);
-			question = questionService.createQuestion(multiChoiceQuestion);
-			questionListService.addQuestionToQuestionList(questionList, question);
-			
+			questionListService.addQuestionToQuestionList(questionList, multiChoiceQuestion);
 			//____________________
 			//_______________________ Correct answer 8
 			correctMultiChoiceAnswer = new CorrectMultiChoiceAnswer();
 			correctMultiChoiceAnswer.setLocal(new Locale("en"));
 			correctMultiChoiceAnswer.setName("Answer 1");
 			correctMultiChoiceAnswer.setDescription("Answer for dummy question 1");
-			correctMultiChoiceAnswer.setChoices(Arrays.asList(new Long[]{1L, 1L, 0L}));
+			correctMultiChoiceAnswer.setCorrectChoices(Arrays.asList(new Long[]{1L, 1L, 0L}));
 			
 
-			correctAnswer = correctAnswerService.createCorrectAnswer(correctMultiChoiceAnswer);
-			correctAnswer.setQuestion(question);
-			correctAnswerService.saveCorrectAnswer(correctAnswer);
+			correctMultiChoiceAnswer.setQuestion(multiChoiceQuestion);
+			correctMultiChoiceAnswerService.saveCorrectMultiChoiceAnswer(correctMultiChoiceAnswer);
 			
 		
 			
@@ -824,7 +781,6 @@ public class DummyData {
 			// -------------------------------
 			// _______________________ question 9
 			multiChoiceQuestion = new MultiChoiceQuestion();
-			question = new Question();
 			multiChoiceQuestion.setLocal(new Locale("fi"));
 			multiChoiceQuestion.setName("vaihtoehto Kysymys");
 			multiChoiceQuestion.setDescription("Teko Kysymys maanosista");
@@ -833,15 +789,14 @@ public class DummyData {
 			body = "Mitä niitä on maanosaia?";
 			multiChoiceQuestion.setBody(body);
 			
-			choices = new ArrayList<>();
-			choices.add("Afrikka");
-			choices.add("Amerikka");
-			choices.add("Venäjä");
-			multiChoiceQuestion.setChoices(choices);
+			options = new ArrayList<>();
+			options.add("Afrikka");
+			options.add("Amerikka");
+			options.add("Venäjä");
+			multiChoiceQuestion.setOptions(options);
 			
 			multiChoiceQuestion = multiChoiceQuestionService.saveMultiChoiceQuestion(multiChoiceQuestion);
-			question = questionService.createQuestion(multiChoiceQuestion);
-			questionListService.addQuestionToQuestionList(questionList, question);
+			questionListService.addQuestionToQuestionList(questionList, multiChoiceQuestion);
 			
 			
 			//-------------------------
@@ -850,12 +805,11 @@ public class DummyData {
 				correctMultiChoiceAnswer.setLocal(new Locale("fi"));
 				correctMultiChoiceAnswer.setName("Vastaus 2");
 				correctMultiChoiceAnswer.setDescription("Vastaus 2");
-				correctMultiChoiceAnswer .setChoices(Arrays.asList(new Long[]{1L, 1L, 0L}));
+				correctMultiChoiceAnswer.setCorrectChoices(Arrays.asList(new Long[]{1L, 1L, 0L}));
 				
 
-				correctAnswer = correctAnswerService.createCorrectAnswer(correctMultiChoiceAnswer);
-				correctAnswer.setQuestion(question);
-				correctAnswerService.saveCorrectAnswer(correctAnswer);
+				correctMultiChoiceAnswer.setQuestion(multiChoiceQuestion);
+				correctMultiChoiceAnswerService.saveCorrectMultiChoiceAnswer(correctMultiChoiceAnswer);
 				
 			
 			
@@ -863,8 +817,7 @@ public class DummyData {
 			//______________________ question 10
 				
 			multiChoiceQuestion = new MultiChoiceQuestion();
-			question = new Question();
-			multiChoiceQuestion.setLocal(new Locale("ar"));
+			multiChoiceQuestion.setLocal(new Locale("fi"));
 			multiChoiceQuestion.setName("سؤال متعدد");
 			multiChoiceQuestion.setDescription("سؤال عن القارات");
 			multiChoiceQuestion.setType(QuestionTypes.MULTI_SELECT_MULTI_CHOICE);
@@ -872,27 +825,25 @@ public class DummyData {
 			body = "ما هي القارات من الاختيارات";
 			multiChoiceQuestion.setBody(body);
 			
-			choices = new ArrayList<>();
-			choices.add("افريقيا");
-			choices.add("امريكا");
-			choices.add("روسيا");
-			multiChoiceQuestion.setChoices(choices);
+			options = new ArrayList<>();
+			options.add("افريقيا");
+			options.add("امريكا");
+			options.add("روسيا");
+			multiChoiceQuestion.setOptions(options);
 			
 			multiChoiceQuestion = multiChoiceQuestionService.saveMultiChoiceQuestion(multiChoiceQuestion);
-			question = questionService.createQuestion(multiChoiceQuestion);
-			questionListService.addQuestionToQuestionList(questionList, question);
+			questionListService.addQuestionToQuestionList(questionList, multiChoiceQuestion);
 			
 			//-------------------------
 			//______________________ correct answer 10
 			correctMultiChoiceAnswer  = new CorrectMultiChoiceAnswer();
-			correctMultiChoiceAnswer.setLocal(new Locale("ar"));
+			correctMultiChoiceAnswer.setLocal(new Locale("fi"));
 			correctMultiChoiceAnswer.setName("Vastaus 3");
 			correctMultiChoiceAnswer.setDescription("Vastaus 3");
-			correctMultiChoiceAnswer.setChoices(Arrays.asList(new Long[]{1L, 1L, 0L}));
+			correctMultiChoiceAnswer.setCorrectChoices(Arrays.asList(new Long[]{1L, 1L, 0L}));
 
-			correctAnswer = correctAnswerService.createCorrectAnswer(correctMultiChoiceAnswer);
-			correctAnswer.setQuestion(question);
-			correctAnswerService.saveCorrectAnswer(correctAnswer);
+			correctMultiChoiceAnswer.setQuestion(multiChoiceQuestion);
+			correctMultiChoiceAnswerService.saveCorrectMultiChoiceAnswer(correctMultiChoiceAnswer);
 			
 			Test test = testService.createTest(new Test());
 			testService.addQuestionList(test, questionList);
@@ -900,83 +851,72 @@ public class DummyData {
 			gradeCriteria.setOnlyCorrectChoicesInMultiChoiceQuestionGetsPointInTotal(true);
 			gradeCriteria.setEveryCorrectSelectionGetsPlus(true);
 			gradeCriteria.setPointsPerChoice(1L);
-			testService.addGradeCriteria(test, gradeCriteria);		
+			testService.addGradeCriteria(test, gradeCriteria);	
+			
 	}
 	
 	public static void answerTest(MultiChoiceQuestionService multiChoiceQuestionService,
-			CorrectMultiChoiceAnswerService correctMultiChoiceAnswerService, 
 			QuestionListService questionListService, 
-			QuestionService questionService,
-			CorrectAnswerService correctAnswerService,
 			TestService testService,
-			AnswerService answerService,
 			TestResponseService testResponseService,
-			AnswerListService answerListService,
+			MultiChoiceAnswerService multiChoiceAnswerService,
 			AssessmentHandler assessmentService,
 			GradeService gradeService) {
 		
-		Tests tests; 
-		AnswerList answerList = new AnswerList();
-		List<Answer> answers = new ArrayList<>();
-		Answer answer;
-		QuestionList questionList = new QuestionList();	
 		
+		Tests tests; 
+		List<Answer> answers = new ArrayList<>();
+		QuestionList questionList = new QuestionList();	
+		Question question;
 	
 		MultiChoiceAnswer multiChoiceAnswer;
 		
 		
 			tests = testService.getTests();
 			questionList = tests.getTests().get(0).getQuestionList();
-			
+			question = questionList.getQuestions().get(0);
 			multiChoiceAnswer = new MultiChoiceAnswer();
+			multiChoiceAnswer.setQuestion(question);
 			multiChoiceAnswer.setChoices(Arrays.asList(new Long[] {1L, 0L, 1L}));
+			multiChoiceAnswerService.saveMultiChoiceAnswer(multiChoiceAnswer);
+			answers.add(multiChoiceAnswer);
 			
 			
-			answer = answerService.createAnswer(multiChoiceAnswer);
-			answer.setQuestion(questionList.getQuestions().get(0));
-			answer = answerService.saveAnswer(answer);
-			answers.add(answer);
-			
+			question = questionList.getQuestions().get(1);
 			multiChoiceAnswer = new MultiChoiceAnswer();
-			multiChoiceAnswer.setChoices(Arrays.asList(new Long[] {1L, 0L, 1L}));
-			answer = answerService.createAnswer(multiChoiceAnswer);
-			answer.setQuestion(questionList.getQuestions().get(1));
-			answer = answerService.saveAnswer(answer);
-			answers.add(answer);
+			multiChoiceAnswer.setQuestion(question);multiChoiceAnswer.setChoices(Arrays.asList(new Long[] {1L, 0L, 1L}));
+			multiChoiceAnswerService.saveMultiChoiceAnswer(multiChoiceAnswer);
+			answers.add(multiChoiceAnswer);
 			
+			question = questionList.getQuestions().get(2);
 			multiChoiceAnswer = new MultiChoiceAnswer();
-			multiChoiceAnswer.setChoices(Arrays.asList(new Long[] {1L, 0L, 0L}));
-			answer = answerService.createAnswer(multiChoiceAnswer);
-			answer.setQuestion(questionList.getQuestions().get(2));
-			answer = answerService.saveAnswer(answer);
-			answers.add(answer);
+			multiChoiceAnswer.setQuestion(question);multiChoiceAnswer.setChoices(Arrays.asList(new Long[] {1L, 0L, 0L}));
+			multiChoiceAnswerService.saveMultiChoiceAnswer(multiChoiceAnswer);
+			answers.add(multiChoiceAnswer);
 			
+			question = questionList.getQuestions().get(3);
 			multiChoiceAnswer = new MultiChoiceAnswer();
-			multiChoiceAnswer.setChoices(Arrays.asList(new Long[] {1L, 1L, 1L}));
-			answer = answerService.createAnswer(multiChoiceAnswer);
-			answer.setQuestion(questionList.getQuestions().get(3));
-			answer = answerService.saveAnswer(answer);
-			answers.add(answer);
+			multiChoiceAnswer.setQuestion(question);multiChoiceAnswer.setChoices(Arrays.asList(new Long[] {1L, 1L, 1L}));
+			multiChoiceAnswerService.saveMultiChoiceAnswer(multiChoiceAnswer);
+			answers.add(multiChoiceAnswer);
 			
+			question = questionList.getQuestions().get(4);
 			multiChoiceAnswer = new MultiChoiceAnswer();
-			multiChoiceAnswer.setChoices(Arrays.asList(new Long[] {0L, 1L, 1L}));
-			answer = answerService.createAnswer(multiChoiceAnswer);
-			answer.setQuestion(questionList.getQuestions().get(4));
-			answer = answerService.saveAnswer(answer);
-			answers.add(answer);
+			multiChoiceAnswer.setQuestion(question);multiChoiceAnswer.setChoices(Arrays.asList(new Long[] {0L, 1L, 1L}));
+			multiChoiceAnswerService.saveMultiChoiceAnswer(multiChoiceAnswer);
+			answers.add(multiChoiceAnswer);
 			
-			answerList = answerListService.cteateList(answerList);
-			answerList.setAnswers(answers);
-			answerList = answerListService.cteateList(answerList);
 			
 			TestResponse testResponse = new TestResponse();
+			testResponse.setAnswers(answers);
 			testResponse = testResponseService.saveTestResponse(testResponse);
-			testResponseService.addAnswerList(testResponse, answerList);
 			testResponse.setTestId(tests.getTests().get(0).getId());
 			testResponse = testResponseService.saveTestResponse(testResponse);
 			
-			Grade grade = assessmentService.grade(testResponse);
-			gradeService.saveGrade(grade);
+			//Grade grade = assessmentService.grade(testResponse);
+			//gradeService.saveGrade(grade);
+			
+			
 			
 	}
 	

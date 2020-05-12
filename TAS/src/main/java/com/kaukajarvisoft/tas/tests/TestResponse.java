@@ -1,15 +1,22 @@
 package com.kaukajarvisoft.tas.tests;
 
+import java.util.List;
 import java.util.Locale;
 
+import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.kaukajarvisoft.tas.answers.Answer;
 import com.kaukajarvisoft.tas.answers.AnswerList;
+import com.kaukajarvisoft.tas.answers.MultiChoiceAnswer;
 import com.kaukajarvisoft.tas.questions.QuestionTypes;
 import com.kaukajarvisoft.tas.users.TasUser;
 
@@ -26,14 +33,14 @@ public class TestResponse {
 	String description;
 	Locale local;
 	
-	@OneToOne
-	TasUser user;
+	//@OneToOne
+	//TasUser user;
 
 	
 	
 	Long  testId;
 	
-	@OneToOne
-	AnswerList answerList;
+	@OneToMany
+	List<Answer> answers;
 
 }

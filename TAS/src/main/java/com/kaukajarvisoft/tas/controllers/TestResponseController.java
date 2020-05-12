@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kaukajarvisoft.tas.answers.AnswerList;
+import com.kaukajarvisoft.tas.answers.MultiChoiceAnswer;
 import com.kaukajarvisoft.tas.services.TestResponseService;
 import com.kaukajarvisoft.tas.tests.TestResponse;
 import com.kaukajarvisoft.tas.tests.TestResponses;
@@ -44,6 +45,19 @@ public class TestResponseController {
 		return new ResponseEntity<TestResponses>(testResponses, HttpStatus.OK);
 	}
 	
+	@GetMapping("/taketest/{testId}")
+	public ResponseEntity<TestResponse> takeATest(@PathVariable Long testId){
+		try {
+			TestResponse testResponse = testResponseService.takeATest(testId);
+			if(testResponse == null)
+				return new ResponseEntity<TestResponse>(testResponse, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<TestResponse>(testResponse, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
+		}
+		
+	}
+	
 	
 	@PostMapping("/testresponse")
 	public ResponseEntity<TestResponse> postTestResponse(@RequestBody TestResponse testResponse) {
@@ -51,20 +65,10 @@ public class TestResponseController {
 	      TestResponse _testResponse = testResponseService.saveTestResponse(testResponse);
 	      return new ResponseEntity<TestResponse>(_testResponse, HttpStatus.CREATED);
 	    } catch (Exception e) {
+	    	System.out.println("ERROR: " + e.getMessage());
 	      return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
 	    }
 	}
 	
-	@PostMapping("/testresponse/addanswerlist/{testResponseId}")
-	public ResponseEntity<TestResponse> addAnswerList(@RequestBody AnswerList answerList, @PathVariable Long testResponseId) {
-	    try {
-	      TestResponse _testResponse = testResponseService.getTestResponse(testResponseId);
-	      _testResponse =  testResponseService.addAnswerList(_testResponse, answerList);
-	      _testResponse = testResponseService.saveTestResponse(_testResponse);
-	      return new ResponseEntity<TestResponse>(_testResponse, HttpStatus.CREATED);
-	    } catch (Exception e) {
-	      return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
-	    }
-	}
 	
 }
