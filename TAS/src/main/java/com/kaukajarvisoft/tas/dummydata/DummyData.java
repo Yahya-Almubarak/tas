@@ -47,7 +47,7 @@ public class DummyData {
 	//	obtainDummySingleChoiceQuestions(singleChoiceQuestionRepository,correctSingleChoiceAnswerRepository, questionListRepository,questionRepository);
 	//	obtainDummyMultiChoiceQuestions(multiChoiceQuestionRepository, correctMultiChoiceAnswerRepository, questionListRepository,questionRepository);
 	//	obtainDummySingleChoiceQuestionsToSecondList(singleChoiceQuestionRepository, correctSingleChoiceAnswerRepository, questionListRepository, questionRepository);
-		obtainDummyQuestionandAddItToListFromServices_I(
+	/*	obtainDummyQuestionandAddItToListFromServices_I(
 				multiChoiceQuestionService,
 				correctMultiChoiceAnswerService,
 				questionListService, 
@@ -58,7 +58,7 @@ public class DummyData {
 			multiChoiceQuestionService,
 			correctMultiChoiceAnswerService,
 			questionListService, 
-			testService); 
+			testService); */
 	
 	/* answerTest(multiChoiceQuestionService, 
 			questionListService, 
